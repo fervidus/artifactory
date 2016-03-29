@@ -5,7 +5,7 @@
 #
 class artifactory::service {
 
-  service { $::artifactory::service_name:
+  service { 'artifactory':
     ensure     => running,
     enable     => true,
     hasstatus  => true,
