@@ -6,10 +6,10 @@ class artifactory::install {
   # Add the jfrog yum repo
   yumrepo {'bintraybintray-jfrog-artifactory-rpms':
     baseurl  => 'https://jfrog.bintray.com/artifactory-rpms',
+    descr    => 'bintraybintray-jfrog-artifactory-rpms',
     gpgcheck => 0,
     enabled  => 1,
   }
-
 
   package { 'artifactory':
     ensure  => present,
