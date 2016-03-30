@@ -16,6 +16,7 @@ class artifactory(
   String $package_name = $::artifactory::params::package_name,
   String $service_name = $::artifactory::params::service_name,
 ) {
+  include ::artifactory::params
 
   # validate parameters here
 
