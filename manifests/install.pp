@@ -25,4 +25,4 @@ class artifactory::install {
     ensure  => present,
     require => Yumrepo[$yum_name],
   }
-
+}
