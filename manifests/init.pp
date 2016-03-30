@@ -11,14 +11,11 @@
 #   e.g. "Specify one or more upstream ntp servers as an array."
 #
 class artifactory(
-  $is_pro       = $::artifactory::params::is_pro,
-  $license_key  = $::artifactory::params::license_key,
-  $package_name = $::artifactory::params::package_name,
-  $service_name = $::artifactory::params::service_name,
-) {
-  include ::artifactory::params
-
-  # validate parameters here
+  Booean $is_pro       = $::artifactory::params::is_pro,
+  String $license_key  = $::artifactory::params::license_key,
+  String $package_name = $::artifactory::params::package_name,
+  String $service_name = $::artifactory::params::service_name,
+) inherits ::artifactory::params {
 
   class { '::artifactory::install': } ->
   class { '::artifactory::config': } ~>
