@@ -4,6 +4,9 @@
 # It sets variables according to platform.
 #
 class artifactory::params {
+  $is_pro = false
+  $license_key = undef
+
   case $::osfamily {
     'Debian': {
       $package_name = 'artifactory'
