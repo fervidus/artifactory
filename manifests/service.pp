@@ -6,9 +6,6 @@
 class artifactory::service {
 
   service { 'artifactory':
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
+    ensure => running,
   }
 }
