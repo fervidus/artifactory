@@ -68,11 +68,8 @@ Puppet::Type.type(:artifactory_license).provide(:default) do
 
     case response
     when Net::HTTPSuccess
-      p 'sucess'
-      p license
       return response
     else
-      p 'loser'
       message = JSON.parse(response.body)['message']
       raise Puppet::Error, message
     end
