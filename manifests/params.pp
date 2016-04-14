@@ -6,6 +6,7 @@
 class artifactory::params {
   $is_pro = false
   $license_key = undef
+  $plugins_dir = '/etc/opt/jfrog/artifactory/plugins'
 
   case $::osfamily {
     'Debian': {

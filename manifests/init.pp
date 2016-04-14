@@ -15,6 +15,7 @@ class artifactory(
   String $license_key  = $::artifactory::params::license_key,
   String $package_name = $::artifactory::params::package_name,
   String $service_name = $::artifactory::params::service_name,
+  String $plugins_dir  = $::artifactory::params::plugins_dir,
 ) inherits ::artifactory::params {
 
   # If pro a license key is needed
