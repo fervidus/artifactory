@@ -17,6 +17,11 @@ class artifactory(
   String $service_name = $::artifactory::params::service_name,
 ) inherits ::artifactory::params {
 
+  # If pro a license key is needed
+  if $is_pro and !$license_key {
+    fail('Artifactory pro require a license key')
+  }
+
   class { '::artifactory::install': } ->
   class { '::artifactory::config': } ~>
   class { '::artifactory::service': } ->

@@ -4,7 +4,7 @@ class artifactory::license {
   if $::artifactory::is_pro {
     artifactory_license { "http://${::facts['ipaddress']}:8081/artifactory":
       ensure   => present,
-      license  => 'ob',
+      license  => $::artifactory::license_key,
       user     => 'admin',
       password => 'password',
     }
