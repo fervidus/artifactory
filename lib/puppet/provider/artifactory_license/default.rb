@@ -45,14 +45,10 @@ Puppet::Type.type(:artifactory_license).provide(:default) do
     when Net::HTTPSuccess
       # For now just check for a validThrough value
       if JSON.parse(response.body)['validThrough'] == ''
-        p 'false'
         return false
       else
-        p 'true'
         return true
       end
-    else
-      p 'nothin'
     end
   end
 
@@ -92,7 +88,7 @@ Puppet::Type.type(:artifactory_license).provide(:default) do
     password            = @resource.value(:password)
     ignore_unauthorized = @resource.value(:ignore_unauthorized)
 
-    return is_valid_license(artifactory_url, user, password, ignore_unauthorized)
+    is_valid_license(artifactory_url, user, password, ignore_unauthorized)
   end
 
   # Delete all directories and files under destination
@@ -101,7 +97,6 @@ Puppet::Type.type(:artifactory_license).provide(:default) do
   end
 
   def create
-    p 'ugghh'
     # Assign variables assigned by parameters
     artifactory_url     = resource[:name]
 
