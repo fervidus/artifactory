@@ -1,3 +1,5 @@
+require 'open-uri'
+
 # Synchronized an artifatory repository by name to a destination
 Puppet::Type.type(:artifactory_license).provide(:default) do
   desc "Installs a license on Artifactory."
@@ -8,19 +10,10 @@ Puppet::Type.type(:artifactory_license).provide(:default) do
 
     license_url = url + '/api/system/license'
 
-    uri_get = URI.parse(license_url)
-    http_get = Net::HTTP.new(uri_get.host, uri_get.port)
-
-    request_get = Net::HTTP::Get.new(uri_get.request_uri)
-    request_get.basic_auth user_name, password_hash
-
-    # Declare response
-    response = nil
-
     begin
-      response = http_get.request(request_get)
+      response = open(license_url, http_basic_authentication: [user_name, password_hash])
 
-      if response.code == '404'
+      if response.status[0] == '404'
         raise Puppet::Error, 'Resource not found'
       end
     rescue Exception => e
@@ -31,24 +24,23 @@ Puppet::Type.type(:artifactory_license).provide(:default) do
         raise Puppet::Error, 'Artifactory does not seem to be available'
       end
     end
-
-    case response
-    when Net::HTTPRedirection
-      is_valid_license(response['location'], user_name, password_hash, ignore_unauthorized)
-    when Net::HTTPUnauthorized
+    
+    if response.status[0] == '401'
       # This only matters if we do not ignore_unauthorized
       if ignore_unauthorized
         return true
       else
         raise Puppet::Error, 'You do not have permission to access ' + url
       end
-    when Net::HTTPSuccess
+    elsif response.status[0] == '200'
       # For now just check for a validThrough value
-      if JSON.parse(response.body)['validThrough'] == ''
+      if JSON.parse(response.read)['validThrough'] == ''
         return false
       else
         return true
       end
+    else
+      raise Puppet::Error, 'Unknown status ' + response.status[0]
     end
   end
 
