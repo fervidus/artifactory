@@ -45,7 +45,7 @@ executions {
   *    This will be considered only if the type ResourceStreamHandle is declared in the closure.
   */
 
-  zipUpload(httpMethod: 'PUT') { params, ResourceStreamHandle body ->
+  zipUpload(, groups: ["readers"], httpMethod: 'PUT') { params, ResourceStreamHandle body ->
     // The repository to add into
     String repo = params['repo'][0]
 
