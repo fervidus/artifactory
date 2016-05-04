@@ -23,9 +23,9 @@ class artifactory(
     fail('Artifactory pro require a license key')
   }
 
-  class { '::artifactory::install': } ->
+  class { '::artifactory::install': } ~>
   class { '::artifactory::service': } ~>
   class { '::artifactory::config': } ~>
-  class { '::artifactory::license': } ->
+  class { '::artifactory::license': } ~>
   Class['::artifactory']
 }
