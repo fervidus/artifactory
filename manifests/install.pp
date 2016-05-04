@@ -26,9 +26,9 @@ class artifactory::install {
     require => Yumrepo[$yum_name],
   }
 
-  file { "${::artifactory::plugins_dir}/zip_upload.groovy":
-    source  => 'puppet:///modules/artifactory/zip_upload.groovy',
-    require => Package[$::artifactory::package_name],
-    notify  => Service['artifactory'],
-  }
+  #file { "${::artifactory::plugins_dir}/zip_upload.groovy":
+  #  source  => 'puppet:///modules/artifactory/zip_upload.groovy',
+  #  require => Package[$::artifactory::package_name],
+  #  notify  => Service['artifactory'],
+  #}
 }
