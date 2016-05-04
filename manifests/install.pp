@@ -27,7 +27,8 @@ class artifactory::install {
   }
 
   file { "${::artifactory::plugins_dir}/zip_upload.groovy":
-    source => 'puppet:///modules/artifactory/zip_upload.groovy',
-    notify => Service['artifactory'],
+    source  => 'puppet:///modules/artifactory/zip_upload.groovy',
+    require => Package[$::artifactory::package_name],
+    notify  => Service['artifactory'],
   }
 }
