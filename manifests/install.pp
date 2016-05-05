@@ -4,7 +4,7 @@
 #
 class artifactory::install {
   # The YUM repos change based on whether or not installing pro
-  if $::artifactory::is_pro {
+  if ( $::artifactory::is_pro or $::artifactory::is_ha )  {
     $yum_name = 'bintray-jfrog-artifactory-pro-rpms'
     $yum_baseurl = 'https://jfrog.bintray.com/artifactory-pro-rpms'
   }
