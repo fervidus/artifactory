@@ -19,7 +19,7 @@ class artifactory::config {
   }
 
   # Make sure jdbc driver  
-  file { "${::artifactory::jdbc_file}":
+  file { "$::artifactory::jdbc_file":
     ensure => file,
     owner  => artifactory,
     group  => artifactory,
@@ -27,7 +27,7 @@ class artifactory::config {
   }  
 
   # Make sure hanode 
-  file { "${::artifactory::hanode_file}":
+  file { "$::artifactory::hanode_file":
     ensure => file,
     source  => 'puppet:///modules/artifactory/ha-node.properties',
     owner  => "artifactory",
@@ -38,7 +38,7 @@ class artifactory::config {
   }
 
   exec { "edit_hanode0":
-    command => "perl -pe 's/_node_id_/${::facts["hostname"]}/' ${::artifactory::hanode_file}",
+    command => "perl -pe 's/_node_id_/${::facts["hostname"]}/' $::artifactory::hanode_file",
     #onlyif  => 
     notify  => Exec['edit_hanode1'],
   }
