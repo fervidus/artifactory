@@ -22,6 +22,10 @@ class artifactory(
   String $cluster_home   = $::artifactory::params::cluster_home,
   String $cluster_props  = $::artifactory::params::cluster_props,
   String $cluster_token  = $::artifactory::params::cluster_token,
+  String $arti_home      = $::artifactory::params::arti_home,
+  String $jdbc_dir       = $::artifactory::params::jdbc_dir,
+  String $jdbc_file      = $::artifactory::params::jdbc_file,
+  String $hanode_file    = $::artifactory::params::hanode_file,
 
 ) inherits ::artifactory::params {
 
