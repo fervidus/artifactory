@@ -12,10 +12,13 @@ class artifactory::params {
   $cluster_home  = '/mnt/clusterhome'
   $cluster_props = 'cluster.properties'
   $cluster_token = 'sonofabitch'
-  $arti_home     = '/var/opt/jfrog/artifactory'
-  $jdbc_dir      = '${::artifactory::arti_home}/tomcat/lib'
-  $jdbc_file     = '${::artifactory::jdbc_dir}/ojdbc7.jar'
-  $hanode_file   = '${::artifactory::arti_home}/etc/ha-node.properties'
+  #$arti_home     = '/var/opt/jfrog/artifactory'
+  #$jdbc_dir      = '$arti_home/tomcat/lib'
+  #$jdbc_file     = '$jdbc_dir/ojdbc7.jar'
+  #$hanode_file   = '$arti_home/etc/ha-node.properties'
+  #$jdbc_dir      = '/var/opt/jfrog/artifactory/tomcat/lib'
+  $jdbc_file     = '/var/opt/jfrog/artifactory/tomcat/lib/ojdbc7.jar'
+  $hanode_file   = '/var/opt/jfrog/artifactory/etc/ha-node.properties'
 
   case $::osfamily {
     'Debian': {
