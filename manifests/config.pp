@@ -34,7 +34,7 @@ class artifactory::config {
     group  => "artifactory",
     mode   => '0664',
     require => Package[$::artifactory::package_name],
-    notify  => Exec['edit_hanode0'],
+    #    notify  => Exec['edit_hanode0'],
   }
 
 #  exec { "edit_hanode0":
