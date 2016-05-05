@@ -13,9 +13,9 @@ class artifactory::params {
   $cluster_props = 'cluster.properties'
   $cluster_token = 'sonofabitch'
   $arti_home     = '/var/opt/jfrog/artifactory'
-  $jdbc_dir      = '$arti_home/tomcat/lib'
-  $jdbc_file     = '$jdbc_dir/ojdbc7.jar'
-  $hanode_file   = '$arti_home/etc/ha-node.properties'
+  $jdbc_dir      = '${::artifactory::arti_home}/tomcat/lib'
+  $jdbc_file     = '${::artifactory::jdbc_dir}/ojdbc7.jar'
+  $hanode_file   = '${::artifactory::arti_home}/etc/ha-node.properties'
 
   case $::osfamily {
     'Debian': {
