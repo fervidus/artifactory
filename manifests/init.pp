@@ -24,11 +24,12 @@ class artifactory(
   #String $arti_home        = $::artifactory::params::arti_home,
   #String $jdbc_dir         = $::artifactory::params::jdbc_dir,
   String $jdbc_file        = $::artifactory::params::jdbc_file,
-  String $hanode_file      = $::artifactory::params::hanode_file,
   String $clusterhome      = $::artifactory::params::clusterhome,
   String $artifactory_nic  = $::artifactory::params::artifactory_nic,
   Boolean $is_primary      = $::artifactory::params::is_primary,
   Integer $membership_port = $::artifactory::params::membership_port,
+  String $hanode_file      = $::artifactory::params::hanode_file,
+  String $db_url           = $::artifactory::params::db_url,
 
 ) inherits ::artifactory::params {
 
