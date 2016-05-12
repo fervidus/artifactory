@@ -47,7 +47,7 @@ class artifactory::config {
       ensure    => file,
       content => epp('artifactory/oracle.properties.epp', 
         {'db_url'      => $::artifactory::db_url, 
-         'db_user'     => $::artifactory::db_user,
+         'db_username' => $::artifactory::db_user,
          'db_password' => $::artifactory::db_passwd,
         }),
       owner  => "artifactory",
