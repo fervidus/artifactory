@@ -22,6 +22,8 @@ class artifactory::params {
   #$jdbc_dir            = '/var/opt/jfrog/artifactory/tomcat/lib'
   $jdbc_file            = '/var/opt/jfrog/artifactory/tomcat/lib/ojdbc7.jar'
   $db_url               = undef
+  $db_user              = undef
+  $db_passwd            = undef
 
   case $::osfamily {
     'Debian': {

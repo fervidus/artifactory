@@ -30,7 +30,8 @@ class artifactory(
   Integer $membership_port = $::artifactory::params::membership_port,
   String $hanode_file      = $::artifactory::params::hanode_file,
   String $db_url           = $::artifactory::params::db_url,
-
+  String $db_user          = $::artifactory::params::db_user,
+  String $db_passwd        = $::artifactory::params::db_passwd,
 ) inherits ::artifactory::params {
 
   # If Pro or HA, a license key is needed
