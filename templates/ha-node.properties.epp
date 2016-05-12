@@ -17,7 +17,7 @@ cluster.home=<%= $clusterhome %>
 
 # The context url that should be used to communicate with this server within the cluster.
 #context.url=http://10.0.0.121:8081/artifactory/
-context.url=http://<%= artifactory_nic %>:8081/artifactory/
+context.url=http://<%= $artifactory_nic %>:8081/artifactory/
 
 # The port that should be used to communicate with this server within the cluster. (Optional)
 #membership.port=10001
