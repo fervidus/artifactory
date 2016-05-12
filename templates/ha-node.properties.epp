@@ -9,7 +9,7 @@
 
 # Unique descriptive name of this server.
 #node.id=art1
-node.id=<%= $facts{'hostname'] %>
+node.id=<%= $facts['hostname'] %>
 
 # The location of $CLUSTER_HOME that you set up on your NFS.
 #cluster.home=/mnt/shared/artifactory/clusterhome
