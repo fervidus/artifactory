@@ -46,9 +46,9 @@ class artifactory::config {
     file { '/var/opt/jfrog/artifactory/etc/storage.properties':
       ensure    => file,
       content => epp('artifactory/oracle.properties.epp', 
-        {'oracle_url'     => $::artifactory::oracle_url, 
-         'db_user'        => $::artifactory::db_user,
-         'db_password'    => $::artifactory::db_password,
+        {'db_url'      => $::artifactory::db_url, 
+         'db_user'     => $::artifactory::db_user,
+         'db_password' => $::artifactory::db_passwd,
         }),
       owner  => "artifactory",
       group  => "artifactory",

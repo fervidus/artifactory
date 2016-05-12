@@ -1,6 +1,6 @@
-<%- | String   $oracle_url,
-      String   $artifactory_username,
-      String   $artifactory_password,
+<%- | String   $db_url,
+      String   $db_username,
+      String   $db_password,
 | -%>
 
 type=oracle
