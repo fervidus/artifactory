@@ -11,7 +11,7 @@ class artifactory::params {
   $plugins_dir   = '/etc/opt/jfrog/artifactory/plugins'
   $cluster_home  = '/mnt/clusterhome'
   $cluster_props = 'cluster.properties'
-  $cluster_token = 'sonofabitch'
+  $cluster_token = 'detroit'
   #$arti_home     = '/var/opt/jfrog/artifactory'
   #$jdbc_dir      = '$arti_home/tomcat/lib'
   #$jdbc_file     = '$jdbc_dir/ojdbc7.jar'
