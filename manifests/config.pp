@@ -43,6 +43,18 @@ class artifactory::config {
       mode   => '0664',
       require => Package[$::artifactory::package_name],
     }
+    file { '/var/opt/jfrog/artifactory/etc/storage.properties':
+      ensure    => file,
+      content => epp('artifactory/oracle.properties.epp', 
+        {'oracle_url'     => $::artifactory::oracle_url, 
+         'db_user'        => $::artifactory::db_user,
+         'db_password'    => $::artifactory::db_password,
+        }),
+      owner  => "artifactory",
+      group  => "artifactory",
+      mode   => '0664',
+      require => Package[$::artifactory::package_name],
+    }
   }
 
 
