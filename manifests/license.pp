@@ -7,7 +7,7 @@ class artifactory::license {
     # for debug output on the puppet client
     #notify {"Running with \$mysql_server_id ${mysql_server_id} ID defined":}
     # for debug output on the puppet client - with full source information
-    notify{"license: ${::artifactory::license_key}":}
+    #notify{"license: ${::artifactory::license_key}":}
 
     artifactory_license { "http://${::facts['ipaddress']}:8081/artifactory":
       ensure   => present,
