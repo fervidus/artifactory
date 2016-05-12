@@ -5,11 +5,14 @@
 #
 class artifactory::params {
   
-  $is_pro        = false
-  $is_ha         = false
-  $license_key   = undef
-  $plugins_dir   = '/etc/opt/jfrog/artifactory/plugins'
-  $cluster_home  = '/mnt/clusterhome'
+  $is_pro          = false
+  $is_ha           = false
+  $license_key     = undef
+  $plugins_dir     = '/etc/opt/jfrog/artifactory/plugins'
+  $clusterhome     = '/mnt/clusterhome'
+  $artifactory_nic = undef
+  $is_primary      = false
+  $membership_port = 10001
   $cluster_props = 'cluster.properties'
   $cluster_token = 'detroit'
   #$arti_home     = '/var/opt/jfrog/artifactory'
