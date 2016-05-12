@@ -42,7 +42,6 @@ class artifactory(
   class { '::artifactory::install': } ->
   class { '::artifactory::config': } ~>
   class { '::artifactory::service': } ->
-  class { '::artifactory::license': } ->
   Class['::artifactory']
 
 }
