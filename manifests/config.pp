@@ -27,29 +27,42 @@ class artifactory::config {
     require => Package[$::artifactory::package_name],
   }
 
+  if( $::artifactory::is_pro ) {
+    # Make sure hanode
+    file { '/var/opt/jfrog/artifactory/etc/artifactory.lic':
+      ensure  => file,
+      content => $::artifactory::license_key,
+      owner   => "artifactory",
+      group   => "artifactory",
+      mode    => '0664',
+      require => Package[$::artifactory::package_name],
+    }
+  }
+
   if ( $::artifactory::is_ha )  {
     # Make sure hanode 
     file { "$::artifactory::hanode_file":
       ensure => file,
       #source  => 'puppet:///modules/artifactory/ha-node.properties',
       content => epp('artifactory/ha-node.properties.epp', 
-        {'clusterhome'     => $::artifactory::clusterhome, 
-         'artifactory_nic' => $::artifactory::artifactory_nic,
-         'is_primary'      => $::artifactory::is_primary,
-         'membership_port' => $::artifcatory::membership_port,
-        }),
+      {'clusterhome'     => $::artifactory::clusterhome, 
+      'artifactory_nic' => $::artifactory::artifactory_nic,
+      'is_primary'      => $::artifactory::is_primary,
+      'membership_port' => $::artifcatory::membership_port,
+      }),
       owner  => "artifactory",
       group  => "artifactory",
       mode   => '0664',
       require => Package[$::artifactory::package_name],
     }
+
     file { '/var/opt/jfrog/artifactory/etc/storage.properties':
       ensure    => file,
       content => epp('artifactory/oracle.properties.epp', 
-        {'db_url'      => $::artifactory::db_url, 
-         'db_username' => $::artifactory::db_user,
-         'db_password' => $::artifactory::db_passwd,
-        }),
+      {'db_url'      => $::artifactory::db_url, 
+      'db_username' => $::artifactory::db_user,
+      'db_password' => $::artifactory::db_passwd,
+      }),
       owner  => "artifactory",
       group  => "artifactory",
       mode   => '0664',
@@ -58,4 +71,4 @@ class artifactory::config {
   }
 
 
-  }
+}
