@@ -9,8 +9,8 @@ class artifactory::install {
     $yum_baseurl = 'https://jfrog.bintray.com/artifactory-pro-rpms'
   }
   else {
-    $yum_name = 'bintraybintray-jfrog-artifactory-rpms'
-    $yum_baseurl = 'bintraybintray-jfrog-artifactory-rpms'
+    $yum_name = 'bintray-jfrog-artifactory-rpms'
+    $yum_baseurl = 'https://jfrog.bintray.com/artifactory-rpms'
   }
 
   # Add the jfrog yum repo
