@@ -20,10 +20,10 @@ class artifactory(
   contain ::artifactory::config
   contain ::artifactory::service
 
-  class { '::artifactory::yum': }     ->
-  class { '::artifactory::install': } ->
-  class { '::artifactory::config': }  ~>
-  class { '::artifactory::service': } ->
+  Class['::artifactory::yum']     ->
+  Class['::artifactory::install'] ->
+  Class['::artifactory::config']  ~>
+  Class['::artifactory::service'] ->
   Class['::artifactory']
 
 }
