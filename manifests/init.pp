@@ -23,7 +23,5 @@ class artifactory(
   Class['::artifactory::yum']     ->
   Class['::artifactory::install'] ->
   Class['::artifactory::config']  ~>
-  Class['::artifactory::service'] ->
-  Class['::artifactory']
-
+  Class['::artifactory::service']
 }
