@@ -15,6 +15,10 @@ class artifactory(
   String           $package_name     = $::artifactory::params::package_name,
   String           $service_name     = $::artifactory::params::service_name,
 ) inherits ::artifactory::params {
+  contain ::artifactory::yum
+  contain ::artifactory::install
+  contain ::artifactory::config
+  contain ::artifactory::service
 
   class { '::artifactory::yum': }     ->
   class { '::artifactory::install': } ->
