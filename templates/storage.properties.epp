@@ -1,0 +1,76 @@
+<%- | Enum['mssql', 'mysql', 'oracle', 'postgresql'] $db_type,
+      String                                         $db_url,
+      String                                         $db_username,
+      String                                         $db_password,
+      Enum['filesystem', 'fullDb','cachedFS']        $binary_provider_type           = 'filesystem',
+      Optional[Integer]                              $pool_max_active                = undef,
+      Optional[Integer]                              $pool_max_idle                  = undef,
+      Optional[Integer]                              $binary_provider_cache_maxSize  = undef,
+      Optional[String]                               $binary_provider_filesystem_dir = undef,
+      Optional[String]                               $binary_provider_cache_dir      = undef
+| -%>
+<%-
+$db_driver = $db_type ? {
+    'mssql'      => 'com.microsoft.sqlserver.jdbc.SQLServerDriver',
+    'mysql'      => 'com.mysql.jdbc.Driver',
+    'oracle'     => 'oracle.jdbc.OracleDriver',
+    'postgresql' => 'org.postgresql.Driver',
+    default      => 'not valid',
+}
+-%>
+#
+#
+# Artifactory is a binaries repository manager.
+# Copyright (C) 2016 JFrog Ltd.
+#
+# Artifactory is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+# Artifactory is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Artifactory.  If not, see <http://www.gnu.org/licenses/>.
+#
+#
+
+type=<%= $db_type %>
+driver=<%= $db_driver %>
+url=<%= $db_url %>
+username=<%= $db_username %>
+password=<%= $db_password %>
+
+## Determines where the actual artifacts binaries are stored. Available options:
+## filesystem - binaries are stored in the filesystem (recommended, default)
+## fullDb     - binaries are stored as blobs in the db, filesystem is used for caching
+## cachedFS   - binaries are stored in the filesystem, but a front cache (with faster access) is added
+## IMPORTANT NOTE: This property should not be change after the initial setup. To change binaries storage you have to export and import
+binary.provider.type=<%= $binary_provider_type %>
+
+## Determines the maximum filesystem cache size in bytes when using binary provider type fullDb or cachedFS. Default is 5GB
+## Supported units are TB (terabytes), GB (gigabytes), MB (megabytes) and KB (kilobytes)
+#binary.provider.cache.maxSize=5GB
+
+<% if $binary_provider_cache_maxSize { -%>
+binary.provider.cache.maxSize=<%= $binary_provider_cache_maxSize %>
+<% } -%>
+
+<% if $pool_max_active { -%>
+pool.max.active=<%= $pool_max_active %>
+<% } -%>
+
+<% if $pool_max_idle { -%>
+pool.max.idle=<%= $pool_max_idle %>
+<% } -%>
+
+<% if $binary_provider_filesystem_dir { -%>
+binary.provider.filesystem.dir=<%= $binary_provider_filesystem_dir %>
+<% } -%>
+
+<% if $binary_provider_cache_dir { -%>
+binary.provider.cache.dir=<%= $binary_provider_cache_dir %>
+<% } -%>
