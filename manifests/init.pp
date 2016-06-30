@@ -15,7 +15,7 @@ class artifactory(
   String $package_name                                                    = $::artifactory::params::package_name,
   String $service_name                                                    = $::artifactory::params::service_name,
   Optional[Enum['mssql', 'mysql', 'oracle', 'postgresql']] $db_type       = $::artifactory::params::db_type,
-  Optional[String] $db_port                                               = $::artifactory::params::db_port,
+  Optional[Integer] $db_port                                              = $::artifactory::params::db_port,
   Optional[String] $db_hostname                                           = $::artifactory::params::db_hostname,
   Optional[String] $db_username                                           = $::artifactory::params::db_username,
   Optional[String] $db_password                                           = $::artifactory::params::db_password,
