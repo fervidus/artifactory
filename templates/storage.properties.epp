@@ -1,5 +1,6 @@
 <%- | Enum['mssql', 'mysql', 'oracle', 'postgresql'] $db_type,
-      String                                         $db_url,
+      String                                         $db_hostname,
+      Integer                                        $db_port,
       String                                         $db_username,
       String                                         $db_password,
       Enum['filesystem', 'fullDb','cachedFS']        $binary_provider_type           = 'filesystem',
@@ -15,6 +16,14 @@ $db_driver = $db_type ? {
     'mysql'      => 'com.mysql.jdbc.Driver',
     'oracle'     => 'oracle.jdbc.OracleDriver',
     'postgresql' => 'org.postgresql.Driver',
+    default      => 'not valid',
+}
+
+$db_url = $db_type ? {
+    'mssql'      => "jdbc:sqlserver://${db_hostname}:${db_port};databaseName=artifactory;sendStringParametersAsUnicode=false;applicationName=Artifactory Binary Repository",
+    'mysql'      => "jdbc:mysql://${db_hostname}:${db_port}/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true",
+    'oracle'     => "jdbc:oracle:thin:@${db_hostname}:${db_port}:ORCL",
+    'postgresql' => "jdbc:postgresql://${db_hostname}:${db_port}/artifactory",
     default      => 'not valid',
 }
 -%>
