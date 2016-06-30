@@ -13,7 +13,7 @@ class artifactory::config {
     $::artifactory::db_password or
     $::artifactory::db_type
     ) {
-    file { '/var/opt/jfrog/artifactory/etc/storage.properties':
+    file { "${::artifactory::artifactory_home}/etc/storage.properties":
       ensure  => file,
       content => epp(
         'artifactory/storage.properties.epp',
@@ -26,9 +26,9 @@ class artifactory::config {
           binary_provider_type           => $::artifactory::binaryvider_type,
           pool_max_active                => $::artifactory::pool_max_active,
           pool_max_idle                  => $::artifactory::pool_max_idle,
-          binary_provider_cache_maxSize  => $::artifactory::binaryvider_cache_maxSize,
-          binary_provider_filesystem_dir => $::artifactory::binaryvider_filesystem_dir,
-          binary_provider_cache_dir      => $::artifactory::binaryvider_cache_dir,
+          binary_provider_cache_maxSize  => $::artifactory::binary_provider_cache_maxSize,
+          binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
+          binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
         }
       ),
       mode    => '0664',
