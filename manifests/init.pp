@@ -26,6 +26,8 @@ class artifactory(
   Optional[String] $binary_provider_filesystem_dir                        = $::artifactory::params::binary_provider_filesystem_dir,
   Optional[String] $binary_provider_cache_dir                             = $::artifactory::params::binary_provider_cache_dir,
 ) inherits ::artifactory::params {
+  $artifactory_home = '/opt/jfrog/artifactory'
+
   contain ::artifactory::yum
   contain ::artifactory::install
   contain ::artifactory::config
