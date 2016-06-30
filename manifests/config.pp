@@ -16,7 +16,7 @@ class artifactory::config {
     file { '/var/opt/jfrog/artifactory/etc/storage.properties':
       ensure  => file,
       content => epp(
-        'artifactory/oracle.properties.epp',
+        'artifactory/storage.properties.epp',
         {
           db_port                        => $::artifactory::db_port,
           db_hostname                    => $::artifactory::db_hostname,
