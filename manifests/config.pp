@@ -34,7 +34,7 @@ class artifactory::config {
       mode    => '0664',
     }
 
-    file { "${::artifactory::artifactory_home}/lib/mysql-connector-java-5.1.39-bin.jar":
+    file { "${::artifactory::artifactory_home}/tomcat/lib/mysql-connector-java-5.1.39-bin.jar":
       ensure => file,
       source => 'puppet:///modules/artifactory/mysql-connector-java-5.1.39-bin.jar',
     }
