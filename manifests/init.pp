@@ -29,7 +29,6 @@ class artifactory(
 ) {
   $artifactory_home = '/var/opt/jfrog/artifactory'
 
-  $package_name     = 'artifactory'
   $service_name     = 'artifactory'
 
   class{'::artifactory::yum': }     ->
