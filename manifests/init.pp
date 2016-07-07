@@ -31,13 +31,8 @@ class artifactory(
   $package_name     = 'artifactory'
   $service_name     = 'artifactory'
 
-  contain ::artifactory::yum
-  contain ::artifactory::install
-  contain ::artifactory::config
-  contain ::artifactory::service
-
-  Class['::artifactory::yum']     ->
-  Class['::artifactory::install'] ->
-  Class['::artifactory::config']  ~>
+  class{'::artifactory::yum': }     ->
+  class{'::artifactory::install': } ->
+  class{'::artifactory::config': }  ~>
   Class['::artifactory::service']
 }
