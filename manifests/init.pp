@@ -34,5 +34,5 @@ class artifactory(
   class{'::artifactory::yum': }     ->
   class{'::artifactory::install': } ->
   class{'::artifactory::config': }  ~>
-  Class['::artifactory::service']
+  class{'::artifactory::service': }
 }
