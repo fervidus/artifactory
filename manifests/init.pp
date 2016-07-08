@@ -13,7 +13,7 @@
 
 class artifactory(
   String $yum_name                                                        = 'bintray-jfrog-artifactory-rpms',
-  String $yum_baseurl                                                     = 'https://jfrog.bintray.com/artifactory-rpms',
+  String $yum_baseurl                                                     = 'http://jfrog.bintray.com/artifactory-rpms',
   String $package_name                                                    = 'jfrog-artifactory',
   Optional[Enum['mssql', 'mysql', 'oracle', 'postgresql']] $db_type       = undef,
   Optional[Integer] $db_port                                              = undef,
