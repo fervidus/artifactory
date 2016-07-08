@@ -13,7 +13,7 @@ class artifactory::config {
     $::artifactory::db_password or
     $::artifactory::db_type
     ) {
-    file { "${::artifactory::artifactory_home}/etc/storage.properties":
+    file { $::artifactory::storage_properties_location:
       ensure  => file,
       content => epp(
         'artifactory/storage.properties.epp',
