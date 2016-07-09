@@ -21,7 +21,7 @@ $db_driver = $db_type ? {
 
 $db_url = $db_type ? {
     'mssql'      => "jdbc:sqlserver://${db_hostname}:${db_port};databaseName=artifactory;sendStringParametersAsUnicode=false;applicationName=Artifactory Binary Repository",
-    'mysql'      => "jdbc:mysql://${db_hostname}:${db_port}/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true",
+    'mysql'      => "jdbc:mysql://${db_hostname}:${db_port}/artdb?characterEncoding=UTF-8&elideSetAutoCommits=true&useSSL=false",
     'oracle'     => "jdbc:oracle:thin:@${db_hostname}:${db_port}:ORCL",
     'postgresql' => "jdbc:postgresql://${db_hostname}:${db_port}/artifactory",
     default      => 'not valid',
