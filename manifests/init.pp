@@ -1,16 +1,7 @@
-# Class: artifactory
+# Class: artifactory:  See README.md for documentation.
 # ===========================
 #
-# Full description of class artifactory here.
 #
-# Parameters
-# ----------
-#
-# * `sample parameter`
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-
 class artifactory(
   String $yum_name                                                        = 'bintray-jfrog-artifactory-rpms',
   String $yum_baseurl                                                     = 'http://jfrog.bintray.com/artifactory-rpms',
