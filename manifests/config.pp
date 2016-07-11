@@ -5,12 +5,13 @@
 class artifactory::config {
   # Install storage.properties if Available
   if(
+    $::artifactory::jdbc_driver_url or
     $::artifactory::db_hostname or
     $::artifactory::db_port     or
     $::artifactory::db_username or
     $::artifactory::db_password or
     $::artifactory::db_type) {
-    if (
+    if ($::artifatory::jdbc_driver_url and
         $::artifactory::db_hostname and
         $::artifactory::db_port     and
         $::artifactory::db_username and
@@ -38,9 +39,11 @@ class artifactory::config {
         mode    => '0664',
       }
 
-      file { "${::artifactory::artifactory_home}/tomcat/lib/mysql-connector-java-5.1.39-bin.jar":
-        ensure => file,
-        source => 'puppet:///modules/artifactory/mysql-connector-java-5.1.39-bin.jar',
+      $file_name =  regsubst($::artifactory::jdbc_driver_url, '.+\/([^\/]+)$', '\1')
+
+      staging::deploy { $file_name:
+        target => "${::artifactory::artifactory_home}/tomcat/lib/${file_name}":
+        source => $::artifactory::jdbc_driver_url,
       }
     }
     else {
