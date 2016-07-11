@@ -11,7 +11,7 @@ class artifactory::config {
     $::artifactory::db_username or
     $::artifactory::db_password or
     $::artifactory::db_type) {
-    if ($::artifatory::jdbc_driver_url and
+    if ($::artifactory::jdbc_driver_url and
         $::artifactory::db_hostname and
         $::artifactory::db_port     and
         $::artifactory::db_username and
@@ -28,7 +28,7 @@ class artifactory::config {
             db_username                    => $::artifactory::db_username,
             db_password                    => $::artifactory::db_password,
             db_type                        => $::artifactory::db_type,
-            binary_provider_type           => $::artifactory::binaryvider_type,
+            binary_provider_type           => $::artifactory::binary_provider_type,
             pool_max_active                => $::artifactory::pool_max_active,
             pool_max_idle                  => $::artifactory::pool_max_idle,
             binary_provider_cache_maxSize  => $::artifactory::binary_provider_cache_maxSize,
