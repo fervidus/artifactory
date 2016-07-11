@@ -42,7 +42,7 @@ class artifactory::config {
       $file_name = regsubst($::artifactory::jdbc_driver_url, '.+\/([^\/]+)$', '\1')
 
       ::staging::deploy { $file_name:
-        target => "${::artifactory::artifactory_home}/tomcat/lib/${file_name}":
+        target => "${::artifactory::artifactory_home}/tomcat/lib/${file_name}",
         source => $::artifactory::jdbc_driver_url,
       }
     }
