@@ -43,6 +43,8 @@ class artifactory::config {
 
       ::wget::fetch { $::artifactory::jdbc_driver_url:
         destination => "${::artifactory::artifactory_home}/tomcat/lib/",
+        mode        => '0775',
+        execuser    => 'artifactory',
       }
     }
     else {
