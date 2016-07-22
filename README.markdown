@@ -2,7 +2,6 @@
 [![Puppet Forge](https://img.shields.io/puppetforge/v/autostructure/artifactory.svg)](https://forge.puppetlabs.com/autostructure/artifactory)
 [![Puppet Forge](https://img.shields.io/puppetforge/f/autostructure/artifactory.svg)](https://forge.puppetlabs.com/autostructure/artifactory)
 
-
 #### Table of Contents
 
 1. [Overview](#overview)
@@ -22,6 +21,7 @@ This ONLY install Artifactory OSS.
 If you are looking for the commercial installation look at:
 
 Artifactory PRO: https://forge.puppet.com/autostructure/artifactory_pro
+
 Artifactory HA: https://forge.puppet.com/autostructure/artifactory_ha
 
 Github and gitlab are great for storing source control, but bad at storing installers and compiled packages.

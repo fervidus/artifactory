@@ -1,480 +1,144 @@
-AllCops:
-  Exclude:
-    # Ignore HTML related things
-    - '**/*.erb'
-    # Ignore vendored gems
-    - 'vendor/**/*'
-    # Ignore code from test fixtures
-    - 'spec/fixtures/**/*'
-
-Lint/ConditionPosition:
-  Enabled: true
-
-Lint/ElseLayout:
-  Enabled: true
-
-Lint/UnreachableCode:
-  Enabled: true
-
-Lint/UselessComparison:
-  Enabled: true
-
-Lint/EnsureReturn:
-  Enabled: true
-
-Lint/HandleExceptions:
-  Enabled: true
-
-Lint/LiteralInCondition:
-  Enabled: true
-
-Lint/ShadowingOuterLocalVariable:
-  Enabled: true
-
-Lint/LiteralInInterpolation:
-  Enabled: true
-
-Style/RedundantReturn:
-  Enabled: true
-
-Lint/AmbiguousOperator:
-  Enabled: true
-
-Lint/AssignmentInCondition:
-  Enabled: true
-
-Style/SpaceBeforeComment:
-  Enabled: true
-
-# DISABLED - not useful
-Style/HashSyntax:
-  Enabled: false
-
-# USES: as shortcut for non nil&valid checking a = x() and a.empty?
-# DISABLED - not useful
-Style/AndOr:
-  Enabled: false
-
-# DISABLED - not useful
-Style/RedundantSelf:
-  Enabled: false
-
-# DISABLED - not useful
-Metrics/MethodLength:
-  Enabled: false
-
-# DISABLED - not useful
-Style/WhileUntilModifier:
-  Enabled: false
-
-# DISABLED - the offender is just haskell envy
-Lint/AmbiguousRegexpLiteral:
-  Enabled: false
-
-# DISABLED
-Lint/Eval:
-  Enabled: false
-
-# DISABLED
-Lint/BlockAlignment:
-  Enabled: false
-
-# DISABLED
-Lint/DefEndAlignment:
-  Enabled: false
-
-# DISABLED
-Lint/EndAlignment:
-  Enabled: false
-
-# DISABLED
-Lint/DeprecatedClassMethods:
-  Enabled: false
-
-# DISABLED
-Lint/Loop:
-  Enabled: false
-
-# DISABLED
-Lint/ParenthesesAsGroupedExpression:
-  Enabled: false
-
-Lint/RescueException:
-  Enabled: false
-
-Lint/StringConversionInInterpolation:
-  Enabled: false
-
-Lint/UnusedBlockArgument:
-  Enabled: false
-
-Lint/UnusedMethodArgument:
-  Enabled: false
-
-Lint/UselessAccessModifier:
-  Enabled: true
-
-Lint/UselessAssignment:
-  Enabled: true
-
-Lint/Void:
-  Enabled: true
-
-Style/AccessModifierIndentation:
-  Enabled: false
-
-Style/AccessorMethodName:
-  Enabled: false
+# Relaxed.Ruby.Style
 
 Style/Alias:
   Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylealias
 
-Style/AlignArray:
+Style/BeginBlock:
   Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylebeginblock
 
-Style/AlignHash:
+Style/BlockDelimiters:
   Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleblockdelimiters
 
-Style/AlignParameters:
+Style/Documentation:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styledocumentation
+
+Style/DotPosition:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styledotposition
+
+Style/DoubleNegation:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styledoublenegation
+
+Style/EndBlock:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleendblock
+
+Style/FormatString:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleformatstring
+
+Style/IfUnlessModifier:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleifunlessmodifier
+
+Style/Lambda:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylelambda
+
+Style/ModuleFunction:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylemodulefunction
+
+Style/MultilineBlockChain:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylemultilineblockchain
+
+Style/NegatedIf:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylenegatedif
+
+Style/NegatedWhile:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylenegatedwhile
+
+Style/ParallelAssignment:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleparallelassignment
+
+Style/PercentLiteralDelimiters:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylepercentliteraldelimiters
+
+Style/PerlBackrefs:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styleperlbackrefs
+
+Style/Semicolon:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesemicolon
+
+Style/SignalException:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesignalexception
+
+Style/SingleLineBlockParams:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesinglelineblockparams
+
+Style/SingleLineMethods:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylesinglelinemethods
+
+Style/SpaceBeforeBlockBraces:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespacebeforeblockbraces
+
+Style/SpaceInsideParens:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespaceinsideparens
+
+Style/SpecialGlobalVars:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylespecialglobalvars
+
+Style/StringLiterals:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylestringliterals
+
+Style/TrailingCommaInLiteral:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#styletrailingcommainliteral
+
+Style/WhileUntilModifier:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#stylewhileuntilmodifier
+
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#lintambiguousregexpliteral
+
+Lint/AssignmentInCondition:
+  Enabled: false
+  StyleGuide: http://relaxed.ruby.style/#lintassignmentincondition
+
+Metrics/AbcSize:
   Enabled: false
 
 Metrics/BlockNesting:
   Enabled: false
 
-Style/AsciiComments:
-  Enabled: false
-
-Style/Attr:
-  Enabled: false
-
-Style/BracesAroundHashParameters:
-  Enabled: false
-
-Style/CaseEquality:
-  Enabled: false
-
-Style/CaseIndentation:
-  Enabled: false
-
-Style/CharacterLiteral:
-  Enabled: false
-
-Style/ClassAndModuleCamelCase:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/ClassCheck:
-  Enabled: false
-
 Metrics/ClassLength:
   Enabled: false
 
-Style/ClassMethods:
-  Enabled: false
-
-Style/ClassVars:
-  Enabled: false
-
-Style/WhenThen:
-  Enabled: false
-
-# DISABLED - not useful
-Style/WordArray:
-  Enabled: false
-
-Style/UnneededPercentQ:
-  Enabled: false
-
-Style/Tab:
-  Enabled: false
-
-Style/SpaceBeforeSemicolon:
-  Enabled: false
-
-Style/TrailingBlankLines:
-  Enabled: false
-
-Style/SpaceInsideBlockBraces:
-  Enabled: false
-
-Style/SpaceInsideBrackets:
-  Enabled: false
-
-Style/SpaceInsideHashLiteralBraces:
-  Enabled: false
-
-Style/SpaceInsideParens:
-  Enabled: false
-
-Style/LeadingCommentSpace:
-  Enabled: false
-
-Style/SingleSpaceBeforeFirstArg:
-  Enabled: false
-
-Style/SpaceAfterColon:
-  Enabled: false
-
-Style/SpaceAfterComma:
-  Enabled: false
-
-Style/SpaceAfterControlKeyword:
-  Enabled: false
-
-Style/SpaceAfterMethodName:
-  Enabled: false
-
-Style/SpaceAfterNot:
-  Enabled: false
-
-Style/SpaceAfterSemicolon:
-  Enabled: false
-
-Style/SpaceAroundEqualsInParameterDefault:
-  Enabled: false
-
-Style/SpaceAroundOperators:
-  Enabled: false
-
-Style/SpaceBeforeBlockBraces:
-  Enabled: false
-
-Style/SpaceBeforeComma:
-  Enabled: false
-
-Style/CollectionMethods:
-  Enabled: false
-
-Style/CommentIndentation:
-  Enabled: false
-
-Style/ColonMethodCall:
-  Enabled: false
-
-Style/CommentAnnotation:
+Metrics/ModuleLength:
   Enabled: false
 
 Metrics/CyclomaticComplexity:
   Enabled: false
 
-Style/ConstantName:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Style/DefWithParentheses:
-  Enabled: false
-
-Style/DeprecatedHashMethods:
-  Enabled: false
-
-Style/DotPosition:
-  Enabled: false
-
-# DISABLED - used for converting to bool
-Style/DoubleNegation:
-  Enabled: false
-
-Style/EachWithObject:
-  Enabled: false
-
-Style/EmptyLineBetweenDefs:
-  Enabled: false
-
-Style/IndentArray:
-  Enabled: false
-
-Style/IndentHash:
-  Enabled: false
-
-Style/IndentationConsistency:
-  Enabled: false
-
-Style/IndentationWidth:
-  Enabled: false
-
-Style/EmptyLines:
-  Enabled: false
-
-Style/EmptyLinesAroundAccessModifier:
-  Enabled: false
-
-Style/EmptyLiteral:
-  Enabled: false
-
 Metrics/LineLength:
   Enabled: false
 
-Style/MethodCallParentheses:
-  Enabled: false
-
-Style/MethodDefParentheses:
-  Enabled: false
-
-Style/LineEndConcatenation:
-  Enabled: false
-
-Style/TrailingWhitespace:
-  Enabled: false
-
-Style/StringLiterals:
-  Enabled: false
-
-Style/TrailingComma:
-  Enabled: false
-
-Style/GlobalVars:
-  Enabled: false
-
-Style/GuardClause:
-  Enabled: false
-
-Style/IfUnlessModifier:
-  Enabled: false
-
-Style/MultilineIfThen:
-  Enabled: false
-
-Style/NegatedIf:
-  Enabled: false
-
-Style/NegatedWhile:
-  Enabled: false
-
-Style/Next:
-  Enabled: false
-
-Style/SingleLineBlockParams:
-  Enabled: false
-
-Style/SingleLineMethods:
-  Enabled: false
-
-Style/SpecialGlobalVars:
-  Enabled: false
-
-Style/TrivialAccessors:
-  Enabled: false
-
-Style/UnlessElse:
-  Enabled: false
-
-Style/VariableInterpolation:
-  Enabled: false
-
-Style/VariableName:
-  Enabled: false
-
-Style/WhileUntilDo:
-  Enabled: false
-
-Style/EvenOdd:
-  Enabled: false
-
-Style/FileName:
-  Enabled: false
-
-Style/For:
-  Enabled: false
-
-Style/Lambda:
-  Enabled: false
-
-Style/MethodName:
-  Enabled: false
-
-Style/MultilineTernaryOperator:
-  Enabled: false
-
-Style/NestedTernaryOperator:
-  Enabled: false
-
-Style/NilComparison:
-  Enabled: false
-
-Style/FormatString:
-  Enabled: false
-
-Style/MultilineBlockChain:
-  Enabled: false
-
-Style/Semicolon:
-  Enabled: false
-
-Style/SignalException:
-  Enabled: false
-
-Style/NonNilCheck:
-  Enabled: false
-
-Style/Not:
-  Enabled: false
-
-Style/NumericLiterals:
-  Enabled: false
-
-Style/OneLineConditional:
-  Enabled: false
-
-Style/OpMethod:
-  Enabled: false
-
-Style/ParenthesesAroundCondition:
-  Enabled: false
-
-Style/PercentLiteralDelimiters:
-  Enabled: false
-
-Style/PerlBackrefs:
-  Enabled: false
-
-Style/PredicateName:
-  Enabled: false
-
-Style/RedundantException:
-  Enabled: false
-
-Style/SelfAssignment:
-  Enabled: false
-
-Style/Proc:
-  Enabled: false
-
-Style/RaiseArgs:
-  Enabled: false
-
-Style/RedundantBegin:
-  Enabled: false
-
-Style/RescueModifier:
-  Enabled: false
-
-Style/RegexpLiteral:
-  Enabled: false
-
-Lint/UnderscorePrefixedVariableName:
+Metrics/MethodLength:
   Enabled: false
 
 Metrics/ParameterLists:
   Enabled: false
 
-Lint/RequireParentheses:
-  Enabled: false
-
-Lint/SpaceBeforeFirstArg:
-  Enabled: false
-
-Style/ModuleFunction:
-  Enabled: false
-
-Lint/Debugger:
-  Enabled: false
-
-Style/IfWithSemicolon:
-  Enabled: false
-
-Style/Encoding:
+Metrics/PerceivedComplexity:
   Enabled: false
