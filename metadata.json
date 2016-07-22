@@ -1,13 +1,22 @@
 {
   "name": "autostructure-artifactory",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Autostructure",
   "summary": "Installs and configures Artifactory OSS",
   "license": "Apache-2.0",
   "source": "https://github.com/autostructure/artifactory.git",
   "project_page": "https://github.com/autostructure/artifactory",
   "issues_url": "https://github.com/autostructure/artifactory/issues",
-  "dependencies": [],
+  "dependencies": [
+    {
+      "name": "maestrodev-wget",
+      "version_requirement": ">= 1.4.0"
+    },
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.0.0"
+    }
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
