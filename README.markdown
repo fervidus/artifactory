@@ -37,6 +37,7 @@ If you need to add database connectivity instantiate with the required parameter
 
 ~~~
 class { '::artifactory':
+  jdbc_driver_url                => 'puppet://modules/my_module/mysql.jar',
   db_type                        => 'mysql',
   db_port                        => 3306,
   db_hostname                    => 'mysqldb.evilcorp.com',
@@ -92,11 +93,11 @@ Sets the package name to install. Defaults to 'jfrog-artifactory-oss'.
 
 This can be changed if Artifactory needs to install a differently named package. Possibly needed if na organization creates their own Artifactory package.
 
-##### `package_name`
+##### `jdbc_driver_url`
 
-Sets the package name to install. Defaults to 'jfrog-artifactory-oss'.
+Sets the location for the jdbc driver. Uses the wget module to retrieve the driver.
 
-This can be changed if Artifactory needs to install a differently named package. Possibly needed if na organization creates their own Artifactory package.
+This is required if using a new data source.
 
 ##### `db_type`
 
