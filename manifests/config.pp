@@ -48,7 +48,7 @@ class artifactory::config {
       }
     }
     else {
-      warning('Database port, hostname, username, password and type must eithier all be set, or non-set. Install will proceed without configuring storage.')
+      warning('Database port, hostname, username, password and type must be all be set, or not set. Install proceeding without storage.')
     }
   }
 }
