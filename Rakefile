@@ -54,7 +54,7 @@ task :contributors do
 end
 
 desc "Run syntax, lint, and spec tests."
-task :test => [
+task test: [
   :metadata_lint,
   :syntax,
   :lint,

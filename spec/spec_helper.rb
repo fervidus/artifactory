@@ -10,9 +10,9 @@ SimpleCov.start do
   add_filter '/spec'
   add_filter '/vendor'
   formatter SimpleCov::Formatter::MultiFormatter.new([
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::Console
-  ])
+                                                       SimpleCov::Formatter::HTMLFormatter,
+                                                       SimpleCov::Formatter::Console
+                                                     ])
 end
 
 RSpec.configure do |c|
