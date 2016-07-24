@@ -38,7 +38,7 @@ class artifactory(
     }
 
     class{'::java':
-      version  => latest,
+      version => latest,
       package => 'java-1.8.0-openjdk-devel',
     }
   }
