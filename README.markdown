@@ -36,10 +36,6 @@ The Artifactory module manages both the installation and database configuration 
 
 ## Setup
 
-### Setup Requirements
-
-None.
-
 ### Beginning with artifactory
 
 If you want a server installed with the default options you can run
@@ -51,8 +47,7 @@ If you need to add database connectivity instantiate with the required parameter
 class { '::artifactory':
   jdbc_driver_url                => 'puppet://modules/my_module/mysql.jar',
   db_type                        => 'mysql',
-  db_port                        => 3306,
-  db_hostname                    => 'mysqldb.evilcorp.com',
+  db_url                         => 'jdbc:oracle:thin:@somedomain.com:1521:arti001',
   db_username                    => 'my_username',
   db_password                    => 'efw23gn2j3',
   binary_provider_type           => 'filesystem',
