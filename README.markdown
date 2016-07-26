@@ -127,13 +127,9 @@ This can be changed if Artifactory needs to install a differently named package.
 
 Only required for database configuration. The type of database to configure for. Valid values are 'mssql', 'mysql', 'oracle', 'postgresql'.
 
-##### `db_hostname`
+##### `db_url`
 
-Only required for database configuration. The hostname of the database.
-
-##### `db_port`
-
-Only required for database configuration. The port of the database.
+Only required for database configuration. The url of the database.
 
 ##### `db_username`
 
