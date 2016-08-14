@@ -1,3 +1,6 @@
+2016-08-14 Release 2.0.5
+- JDBC driver added as owner root, not artifactory
+
 2016-07-26 Release 2.0.0
 - Remove db_hostname and db_port. Use db_url instead.
 
