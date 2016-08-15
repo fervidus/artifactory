@@ -1,3 +1,6 @@
+2016-08-14 Release 2.0.7
+- Fix JDBC permissions
+
 2016-08-14 Release 2.0.5
 - JDBC driver added as owner root, not artifactory
 
