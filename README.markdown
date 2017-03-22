@@ -53,7 +53,7 @@ class { '::artifactory':
   binary_provider_type           => 'filesystem',
   pool_max_active                => 100,
   pool_max_idle                  => 10,
-  binary_provider_cache_maxSize  => $binary_provider_cache_maxSize,
+  binary_provider_cache_maxsize  => $binary_provider_cache_maxsize,
   binary_provider_filesystem_dir => '/var/opt/jfrog/artifactory/data/filestore',
   binary_provider_cache_dir      => '/var/opt/jfrog/artifactory/',
 }
@@ -158,7 +158,7 @@ Optional setting for the maximum number of pooled database connections. Defaults
 
 Optional setting for the maximum number of pooled idle database connections Defaults to 10.
 
-##### `binary_provider_cache_maxSize`
+##### `binary_provider_cache_maxsize`
 
 Optional setting for the maximum cache size. This value specifies the maximum cache size (in bytes) to allocate on the system for caching BLOBs.
 

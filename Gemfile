@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 group :test do
   gem 'metadata-json-lint'
-  gem 'puppet' # , ENV['PUPPET_GEM_VERSION'] || '~> 3.8.0'
+  gem 'puppet', ENV['PUPPET_GEM_VERSION'] || '~> 4.9.0'
   gem 'puppetlabs_spec_helper'
   gem 'rake'
   gem 'rspec'

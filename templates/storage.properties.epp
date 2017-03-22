@@ -5,7 +5,7 @@
       Enum['filesystem', 'fullDb','cachedFS']        $binary_provider_type           = 'filesystem',
       Optional[Integer]                              $pool_max_active                = undef,
       Optional[Integer]                              $pool_max_idle                  = undef,
-      Optional[Integer]                              $binary_provider_cache_maxSize  = undef,
+      Optional[Integer]                              $binary_provider_cache_maxsize  = undef,
       Optional[String]                               $binary_provider_filesystem_dir = undef,
       Optional[String]                               $binary_provider_cache_dir      = undef
 | -%>
@@ -55,8 +55,8 @@ binary.provider.type=<%= $binary_provider_type %>
 ## Supported units are TB (terabytes), GB (gigabytes), MB (megabytes) and KB (kilobytes)
 #binary.provider.cache.maxSize=5GB
 
-<% if $binary_provider_cache_maxSize { -%>
-binary.provider.cache.maxSize=<%= $binary_provider_cache_maxSize %>
+<% if $binary_provider_cache_maxsize { -%>
+binary.provider.cache.maxSize=<%= $binary_provider_cache_maxsize %>
 <% } -%>
 
 <% if $pool_max_active { -%>

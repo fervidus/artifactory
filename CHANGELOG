@@ -1,4 +1,7 @@
 
+2017-03-21 Release 2.0.9
+- Fix simple puppet linter problems
+
 2017-03-21 Release 2.0.8
 - Change from wget to file type to grab binary drivers
 

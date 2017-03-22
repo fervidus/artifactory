@@ -15,7 +15,7 @@ class artifactory(
   Optional[Enum['filesystem', 'fullDb','cachedFS']] $binary_provider_type = undef,
   Optional[Integer] $pool_max_active                                      = undef,
   Optional[Integer] $pool_max_idle                                        = undef,
-  Optional[Integer] $binary_provider_cache_maxSize                        = undef,
+  Optional[Integer] $binary_provider_cache_maxsize                        = undef,
   Optional[String] $binary_provider_filesystem_dir                        = undef,
   Optional[String] $binary_provider_cache_dir                             = undef,
 ) {
