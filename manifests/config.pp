@@ -36,12 +36,18 @@ class artifactory::config {
         mode    => '0664',
       }
 
-      #$file_name =  regsubst($::artifactory_ha::jdbc_driver_url, '.+\/([^\/]+)$', '\1')
+      $file_name =  regsubst($::artifactory::jdbc_driver_url, '.+\/([^\/]+)$', '\1')
 
-      ::wget::fetch { $::artifactory::jdbc_driver_url:
-        destination => "${::artifactory::artifactory_home}/tomcat/lib/",
-        mode        => '0775',
-        execuser    => 'artifactory',
+      # ::wget::fetch { $::artifactory::jdbc_driver_url:
+      #   destination => "${::artifactory::artifactory_home}/tomcat/lib/",
+      #   mode        => '0775',
+      #   execuser    => 'artifactory',
+      # }
+
+      file { "${::artifactory::artifactory_home}/tomcat/lib/${file_name}":
+        source => $::artifactory::jdbc_driver_url,
+        mode   => '0775',
+        owner  => 'artifactory',
       }
     }
     else {
