@@ -9,10 +9,6 @@
   "issues_url": "https://github.com/autostructure/artifactory/issues",
   "dependencies": [
     {
-      "name": "maestrodev-wget",
-      "version_requirement": ">= 1.4.0"
-    },
-    {
       "name": "puppetlabs-java",
       "version_requirement": ">= 1.5.0"
     },
@@ -35,6 +31,12 @@
         "6",
         "7"
       ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.4.0 < 5.0.0"
     }
   ]
 }
