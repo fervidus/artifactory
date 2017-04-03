@@ -42,11 +42,11 @@ class artifactory(
     }
   }
 
-  Class['::java'] ->
-  class{'::artifactory::yum': }     ->
-  class{'::artifactory::install': } ->
-  class{'::artifactory::config': }  ~>
-  class{'::artifactory::service': }
+  Class['::java']
+  -> class{'::artifactory::yum': }
+  -> class{'::artifactory::install': }
+  -> class{'::artifactory::config': }
+  ~> class{'::artifactory::service': }
 
   # Make sure java is included
   include ::java
