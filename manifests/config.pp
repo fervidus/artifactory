@@ -16,10 +16,10 @@ class artifactory::config {
         $::artifactory::db_password and
         $::artifactory::db_type
         ) {
-      file { "${::artifactory::artifactory_home}/etc/storage.properties":
+      file { "${::artifactory::artifactory_home}/etc/db.properties":
         ensure  => file,
         content => epp(
-          'artifactory/storage.properties.epp',
+          'artifactory/db.properties.epp',
           {
             db_url                         => $::artifactory::db_url,
             db_username                    => $::artifactory::db_username,
@@ -34,6 +34,11 @@ class artifactory::config {
           }
         ),
         mode    => '0664',
+      }
+
+      file { "${::artifactory::artifactory_home}/etc/storage.properties":
+        ensure => link,
+        target => "${::artifactory::artifactory_home}/etc/db.properties",
       }
 
       $file_name =  regsubst($::artifactory::jdbc_driver_url, '.+\/([^\/]+)$', '\1')

@@ -1,3 +1,4 @@
 vendor/
 spec/
 tests/
+.DS_Store
