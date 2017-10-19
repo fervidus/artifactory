@@ -4,6 +4,7 @@
 #
 class artifactory(
   Boolean $manage_java                                                    = true,
+  Boolean $manage_repo                                                    = true,
   String $yum_name                                                        = 'bintray-jfrog-artifactory-rpms',
   String $yum_baseurl                                                     = 'http://jfrog.bintray.com/artifactory-rpms',
   String $package_name                                                    = 'jfrog-artifactory-oss',
