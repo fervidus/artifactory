@@ -3,7 +3,7 @@
 # This class is called from artifactory for install.
 #
 class artifactory::yum {
-  if $::artifactory::manage_repo
+  if $::artifactory::manage_repo {
     # Add the jfrog yum repo
     yumrepo { $::artifactory::yum_name:
       baseurl  => $::artifactory::yum_baseurl,
