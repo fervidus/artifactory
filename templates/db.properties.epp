@@ -1,16 +1,17 @@
-<%- | Enum['mssql', 'mysql', 'oracle', 'postgresql'] $db_type,
-      String                                         $db_url,
-      String                                         $db_username,
-      String                                         $db_password,
-      Enum['filesystem', 'fullDb','cachedFS']        $binary_provider_type           = 'filesystem',
-      Optional[Integer]                              $pool_max_active                = undef,
-      Optional[Integer]                              $pool_max_idle                  = undef,
-      Optional[Integer]                              $binary_provider_cache_maxsize  = undef,
-      Optional[String]                               $binary_provider_filesystem_dir = undef,
-      Optional[String]                               $binary_provider_cache_dir      = undef
+<%- | Enum['derby', 'mssql', 'mysql', 'oracle', 'postgresql'] $db_type,
+      String                                                  $db_url,
+      String                                                  $db_username,
+      String                                                  $db_password,
+      Enum['filesystem', 'fullDb','cachedFS']                 $binary_provider_type           = 'filesystem',
+      Optional[Integer]                                       $pool_max_active                = undef,
+      Optional[Integer]                                       $pool_max_idle                  = undef,
+      Optional[Integer]                                       $binary_provider_cache_maxsize  = undef,
+      Optional[String]                                        $binary_provider_filesystem_dir = undef,
+      Optional[String]                                        $binary_provider_cache_dir      = undef
 | -%>
 <%-
 $db_driver = $db_type ? {
+    'derby'      => 'org.apache.derby.jdbc.EmbeddedDriver',
     'mssql'      => 'com.microsoft.sqlserver.jdbc.SQLServerDriver',
     'mysql'      => 'com.mysql.jdbc.Driver',
     'oracle'     => 'oracle.jdbc.OracleDriver',
@@ -41,8 +42,10 @@ $db_driver = $db_type ? {
 type=<%= $db_type %>
 driver=<%= $db_driver %>
 url=<%= $db_url %>
+<% if $db_type != 'derby' { -%>
 username=<%= $db_username %>
 password=<%= $db_password %>
+<% } -%>
 
 ## Determines where the actual artifacts binaries are stored. Available options:
 ## filesystem - binaries are stored in the filesystem (recommended, default)
