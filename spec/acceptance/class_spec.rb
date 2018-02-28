@@ -3,7 +3,7 @@ require 'spec_helper_acceptance'
 describe 'artifactory class' do
   context 'default parameters' do
     # Using puppet_apply as a helper
-    it 'should work idempotently with no errors' do
+    it 'works idempotently with no errors' do
       pp = <<-ARTIFACTORY_TEST
       class { 'artifactory': }
       ARTIFACTORY_TEST
