@@ -68,6 +68,16 @@ describe 'artifactory' do
             )
           }
         end
+
+        context "artifactory class with manage_java set to false" do
+          let(:params) {
+            {
+              'manage_java' => false,
+            }
+          }
+
+          it { is_expected.to compile.with_all_deps }
+        end
       end
     end
   end
