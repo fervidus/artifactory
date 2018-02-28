@@ -181,8 +181,7 @@ This module has been tested on:
 
 Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
 
-### Authors
 
-This module is based on work by Autostructure. The following contributors have contributed to this module:
+### Contributors
 
-* Bryan Belanger
+To see who's already involved, see the [list of contributors.](https://github.com/autostructure/artifactory/graphs/contributors)
