@@ -1,4 +1,8 @@
 
+2018-02-28 Release 2.0.12
+- Added fix for manage_java = false dependency
+- Added enhancement for derby usage
+
 2017-03-21 Release 2.0.9
 - Fix simple puppet linter problems
 
