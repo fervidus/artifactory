@@ -5,13 +5,11 @@
 class artifactory::config {
   # Install storage.properties if Available
   if(
-    $::artifactory::jdbc_driver_url or
     $::artifactory::db_url or
     $::artifactory::db_username or
     $::artifactory::db_password or
     $::artifactory::db_type) {
-    if ($::artifactory::jdbc_driver_url and
-        $::artifactory::db_url and
+    if ($::artifactory::db_url and
         $::artifactory::db_username and
         $::artifactory::db_password and
         $::artifactory::db_type
@@ -41,12 +39,14 @@ class artifactory::config {
         target => "${::artifactory::artifactory_home}/etc/db.properties",
       }
 
-      $file_name =  regsubst($::artifactory::jdbc_driver_url, '.+\/([^\/]+)$', '\1')
+      if ($::artifactory::jdbc_driver_url) {
+        $file_name =  regsubst($::artifactory::jdbc_driver_url, '.+\/([^\/]+)$', '\1')
 
-      file { "${::artifactory::artifactory_home}/tomcat/lib/${file_name}":
-        source => $::artifactory::jdbc_driver_url,
-        mode   => '0775',
-        owner  => 'artifactory',
+        file { "${::artifactory::artifactory_home}/tomcat/lib/${file_name}":
+          source => $::artifactory::jdbc_driver_url,
+          mode   => '0775',
+          owner  => 'artifactory',
+        }
       }
     }
     else {
