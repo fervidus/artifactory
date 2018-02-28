@@ -24,7 +24,7 @@ class artifactory(
 
   $service_name = 'artifactory'
 
-  if($manage_java) {
+  if ($manage_java) {
     # Ensure other open-jdk packages are removed
     $remove_jdks = [
       'java-1.6.0-openjdk-devel',
@@ -41,14 +41,20 @@ class artifactory(
       version => latest,
       package => 'java-1.8.0-openjdk-devel',
     }
+
+    Class['::java']
+    -> class{'::artifactory::yum': }
+    -> class{'::artifactory::install': }
+    -> class{'::artifactory::config': }
+    ~> class{'::artifactory::service': }
+
+    # Make sure java is included
+    include ::java
+  } else {
+    Class{'::artifactory::yum': }
+    -> class{'::artifactory::install': }
+    -> class{'::artifactory::config': }
+    ~> class{'::artifactory::service': }
   }
 
-  Class['::java']
-  -> class{'::artifactory::yum': }
-  -> class{'::artifactory::install': }
-  -> class{'::artifactory::config': }
-  ~> class{'::artifactory::service': }
-
-  # Make sure java is included
-  include ::java
 }
