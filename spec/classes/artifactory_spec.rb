@@ -78,6 +78,21 @@ describe 'artifactory' do
 
           it { is_expected.to compile.with_all_deps }
         end
+
+        context 'artifactory class with version specified' do
+          let(:params) do
+            {
+              'package_version' => '5.9.1',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it {
+            is_expected.to contain_package('jfrog-artifactory-oss').with(
+              'ensure' => '5.9.1',
+            )
+          }
+        end
       end
     end
   end

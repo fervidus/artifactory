@@ -4,6 +4,6 @@
 #
 class artifactory::install {
   package { $::artifactory::package_name:
-    ensure  => present,
+    ensure  => $::artifactory::package_version,
   }
 }
