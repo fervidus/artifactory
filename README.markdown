@@ -100,6 +100,13 @@ Sets the package name to install. Defaults to 'jfrog-artifactory-oss'.
 
 This can be changed if Artifactory needs to install a differently named package. Possibly needed if na organization creates their own Artifactory package.
 
+##### `package_version`
+
+Sets the package version to. Defaults to 'present'.
+
+This can be changed if you need to install a specific version. It takes the same values allowed for the `ensure` parameter of the standard `package` resource type.
+
+
 ##### `manage_java`
 
 Tells the module whether or not to manage the java class. This defaults to true. Usually this is what you want.
@@ -111,12 +118,6 @@ If your organization actively manages the java installs across your environment 
 Sets the location for the jdbc driver. The built-in `file` type is used to retrieve the driver.
 
 This is required if using a new data source.
-
-##### `package_name`
-
-Sets the package name to install. Defaults to 'jfrog-artifactory-oss'.
-
-This can be changed if Artifactory needs to install a differently named package. Possibly needed if na organization creates their own Artifactory package.
 
 ##### `db_type`
 
