@@ -13,6 +13,8 @@ AllCops:
   - pkg/**/*
   - spec/fixtures/**/*
   - vendor/**/*
+Style/FileName:
+  Enabled: false
 Metrics/LineLength:
   Description: People have wide screens, use them.
   Max: 200

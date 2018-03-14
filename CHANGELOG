@@ -1,3 +1,6 @@
+2018-03--14 Release 2.0.13
+- Remove OJDBC JAR file and ha-node prop files
+- Make artifactory version configurable
 
 2018-02-28 Release 2.0.12
 - Added fix for manage_java = false dependency
