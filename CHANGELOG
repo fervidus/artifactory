@@ -1,3 +1,6 @@
+2018-13-08 Release 2.0.14
+- Refactored for PDK and ensured all test pass.
+
 2018-03--14 Release 2.0.13
 - Remove OJDBC JAR file and ha-node prop files
 - Make artifactory version configurable
