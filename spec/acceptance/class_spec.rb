@@ -13,7 +13,7 @@ describe 'artifactory class' do
       apply_manifest(pp, catch_changes: true)
     end
 
-    describe package('artifactory') do
+    describe package('jfrog-artifactory-oss') do
       it { is_expected.to be_installed }
     end
 
