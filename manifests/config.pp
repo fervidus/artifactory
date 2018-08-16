@@ -8,7 +8,7 @@ class artifactory::config {
     $::artifactory::db_url or
     $::artifactory::db_username or
     $::artifactory::db_password or
-    $::artifactory::db_type) {cd ../arti
+    $::artifactory::db_type) {
     if ($::artifactory::db_url and
         $::artifactory::db_username and
         $::artifactory::db_password and
