@@ -1,6 +1,6 @@
 {
   "name": "autostructure-artifactory",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "author": "Autostructure",
   "summary": "Installs and configures Artifactory OSS",
   "license": "Apache-2.0",
