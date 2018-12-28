@@ -143,7 +143,7 @@ Optional setting for the binary storage provider. The type of database to config
 This means that metadata is stored in the database, but binaries are stored in the file system. The default location is under $ARTIFACTORY_HOME/data/filestore however this can be modified.
 
 ###### fullDb
-All the metadata and the binaries are stored as BLOBs in the database, objects are cached like in cachedFS
+All the metadata and the binaries are stored as BLOBs in the database, objects are cached as in cachedFS.
 
 ###### cachedFS
 Works the same way as filesystem but also has a binary LRU (Least Recently Used) cache for upload/download requests. Improves performance of instances with high IOPS (I/O Operations) or slow NFS access.
@@ -152,7 +152,7 @@ Works the same way as filesystem but also has a binary LRU (Least Recently Used)
 This is the setting used for S3 Object Storage.
 
 ###### fullDbDirect
-All the metadata and the binaries are stored as BLOBs in the database. No caching occurs
+All the metadata and the binaries are stored as BLOBs in the database. No caching occurs.
 
 ##### `pool_max_active`
 
