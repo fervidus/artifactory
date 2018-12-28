@@ -31,7 +31,9 @@ class artifactory::config {
             binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
           }
         ),
-        mode    => '0664',
+        mode    => '0640',
+        owner   => 'artifactory',
+        group   => 'artifactory',
       }
 
       file { "${::artifactory::artifactory_home}/etc/storage.properties":
