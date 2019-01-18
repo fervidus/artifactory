@@ -27,16 +27,32 @@ class artifactory::config {
             pool_max_active                => $::artifactory::pool_max_active,
             pool_max_idle                  => $::artifactory::pool_max_idle,
             binary_provider_cache_maxsize  => $::artifactory::binary_provider_cache_maxsize,
+            binary_provider_base_data_dir  => $::artifactory::binary_provider_base_data_dir,
             binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
             binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
           }
         ),
-        mode    => '0664',
+        mode    => '0640',
+        owner   => 'artifactory',
+        group   => 'artifactory',
       }
 
       file { "${::artifactory::artifactory_home}/etc/storage.properties":
         ensure => link,
         target => "${::artifactory::artifactory_home}/etc/db.properties",
+      }
+      file { "${::artifactory::artifactory_home}/etc/binarystore.xml":
+        ensure  => file,
+        content => epp(
+          'artifactory/binarystore.xml.epp',
+          {
+            binary_provider_type           => $::artifactory::binary_provider_type,
+            binary_provider_cache_maxsize  => $::artifactory::binary_provider_cache_maxsize,
+            binary_provider_base_data_dir  => $::artifactory::binary_provider_base_data_dir,
+            binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
+            binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
+          }
+        ),
       }
 
       if ($::artifactory::jdbc_driver_url) {

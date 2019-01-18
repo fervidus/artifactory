@@ -1,0 +1,72 @@
+<%- | Enum['filesystem', 'fullDb','cachedFS', 'fullDbDirect'] $binary_provider_type           = 'filesystem',
+      Optional[Integer]                                       $binary_provider_cache_maxsize  = undef,
+      Optional[String]                                        $binary_provider_base_data_dir  = undef,
+      Optional[String]                                        $binary_provider_filesystem_dir = undef,
+      Optional[String]                                        $binary_provider_cache_dir      = undef
+| -%>
+<%- $mapped_provider_type = $binary_provider_type ? {
+  'filesystem'   => 'file-system',
+  'fullDb'       => 'full-db',
+  'cachedFS'     => 'cache-fs',
+  'fullDbDirect' => 'full-db-direct',
+}
+-%>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Artifactory is a binaries repository manager.
+  ~ Copyright (C) 2018 JFrog Ltd.
+  ~
+  ~ Artifactory is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Artifactory is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with Artifactory.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<!--
+    This file configures Artifactory's binary provider
+-->
+
+<!--
+  ~ TAKE CARE! Making changes to this file may result in losing binaries stored in Artifactory!
+  ~ If you are not sure of what you are doing, please contact JFrog Support for assistance.
+  -->
+
+<config version="1">
+    <chain template="<%= $mapped_provider_type %>"/>
+<% if $binary_provider_type == 'filesystem'
+    and ($binary_provider_base_data_dir or $binary_provider_filesystem_dir)
+  or $binary_provider_type == 'cachedFS'
+    and ($binary_provider_cache_dir or $binary_provider_cache_maxsize) { -%>
+    <provider id="<%= $mapped_provider_type %>" type="<%= $mapped_provider_type %>">
+<% if $binary_provider_type == 'filesystem'
+  and $binary_provider_base_data_dir { -%>
+        <baseDataDir><%= $binary_provider_base_data_dir %></baseDataDir>
+<% } -%>
+<% if $binary_provider_type == 'filesystem'
+  and $binary_provider_filesystem_dir { -%>
+        <fileStoreDir><%= $binary_provider_filesystem_dir %></fileStoreDir>
+<% } -%>
+<% if $binary_provider_type == 'cachedFS'
+  and $binary_provider_cache_maxsize { -%>
+        <maxCacheSize><%= $binary_provider_cache_maxsize %></maxCacheSize>
+<% } -%>
+<% if $binary_provider_type == 'cachedFS'
+  and $binary_provider_cache_dir { -%>
+        <cacheProviderDir><%= $binary_provider_cache_dir %></cacheProviderDir>
+<% } -%>
+    </provider>
+<% } elsif $binary_provider_type == 'fullDb' { -%>
+    <provider id="cache-fs" type="cache-fs">
+      <provider id="blob" type="blob"/>
+    </provider>
+<% } elsif $binary_provider_type == 'fullDbDirect' { -%>
+    <provider id="blob" type="blob"/>
+<% } -%>
+</config>
