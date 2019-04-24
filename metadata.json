@@ -9,6 +9,10 @@
   "issues_url": "https://github.com/autostructure/artifactory/issues",
   "dependencies": [
     {
+      "name": "puppetlabs-yumrepo_core",
+      "version_requirement": ">= 1.0.0 <= 2.0.0"
+    },
+    {
       "name": "puppetlabs-java",
       "version_requirement": ">= 1.5.0 <= 3.0.0"
     },
@@ -36,10 +40,10 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.4.0 < 5.0.0"
+      "version_requirement": ">= 4.4.0 < 6.0.0"
     }
   ],
-  "pdk-version": "1.9.0",
-  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
-  "template-ref": "1.9.0-0-g7281db5"
+  "pdk-version": "1.10.0",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#1.10.0",
+  "template-ref": "tags/1.10.0-0-gbba9ac3"
 }
