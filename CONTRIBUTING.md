@@ -77,7 +77,7 @@ Beaker fires up a new virtual machine (using Vagrant) and runs a series of
 simple tests against it after applying the module. You can run our
 Beaker tests with:
 
-    bundle exec rake acceptance
+    bundle exec rake beaker
 
 This will use the host described in `spec/acceptance/nodeset/default.yml`
 by default. To run against another host, set the `BEAKER_set` environment
