@@ -21,6 +21,7 @@ class artifactory(
   Optional[String] $binary_provider_base_data_dir                                          = undef,
   Optional[String] $binary_provider_filesystem_dir                                         = undef,
   Optional[String] $binary_provider_cache_dir                                              = undef,
+  Optional[String] $master_key                                                             = undef,
 ) {
   $artifactory_home = '/var/opt/jfrog/artifactory'
 

@@ -34,6 +34,25 @@ describe 'artifactory' do
           }
         end
 
+        context 'artifactory class with master_key parameter' do
+          let(:params) do
+            {
+              'master_key' => 'masterkey',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          it {
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/security/master.key').with(
+              'content' => 'masterkey',
+              'mode' => '0640',
+              'owner' => 'artifactory',
+              'group' => 'artifactory',
+            )
+          }
+        end
+
         context 'artifactory class with jdbc_driver_url parameter' do
           let(:params) do
             {

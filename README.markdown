@@ -178,6 +178,10 @@ Optional setting for the artifactory filestore location. If the binary.provider.
 
 Optional setting for the location of the cache. This should be set to your $ARTIFACTORY_HOME directory directly (not on the NFS).
 
+##### `master_key`
+
+Optional setting for the master key that Artifactory uses to connect to the database. If specified, it ensures that if your node terminates, a new one can be spun up that can connect to the same database as before. Otherwise, Artifactory will generate a new master key on first run.
+
 ## Limitations
 
 This module has been tested on:

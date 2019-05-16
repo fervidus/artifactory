@@ -77,4 +77,20 @@ class artifactory::config {
       }
     ),
   }
+
+  if ($::artifactory::master_key) {
+    file { "${::artifactory::artifactory_home}/etc/security":
+      ensure => directory,
+      owner  => 'artifactory',
+      group  => 'artifactory',
+    }
+
+    file { "${::artifactory::artifactory_home}/etc/security/master.key":
+      ensure  => file,
+      content => $::artifactory::master_key,
+      mode    => '0640',
+      owner   => 'artifactory',
+      group   => 'artifactory',
+    }
+  }
 }
