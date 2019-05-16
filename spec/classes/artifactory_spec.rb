@@ -56,7 +56,7 @@ describe 'artifactory' do
           }
 
           it {
-            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/db.properties').with(
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/.secrets/.temp.db.properties').with(
               'ensure' => 'file',
               'mode' => '0640',
               'owner' => 'artifactory',
