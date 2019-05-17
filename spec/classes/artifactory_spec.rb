@@ -4,9 +4,7 @@ describe 'artifactory' do
   context 'supported operating systems' do
     on_supported_os.each do |os, facts|
       context "on #{os}" do
-        let(:facts) do
-          facts
-        end
+        let(:facts) { facts.merge('root_home' => '/root') }
 
         context 'artifactory class without any parameters' do
           it { is_expected.to compile.with_all_deps }
@@ -100,6 +98,30 @@ describe 'artifactory' do
           end
 
           it { is_expected.to compile.with_all_deps }
+        end
+
+        context 'mysql automated database' do
+          let(:params) do
+            {
+              'db_automate' => true,
+              'db_type'     => 'mysql',
+              'root_password' => 'password',
+              'db_username' => 'artifactory',
+              'db_password' => 'password',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it {
+            is_expected.to contain_class('mysql::server').with(
+              'package_name'            => 'mariadb-server',
+              'package_ensure'          => '5.5.60-1.el7_5',
+              'remove_default_accounts' => true,
+              'root_password'           => 'password',
+              # 'password' => 'password',
+              # 'user' => 'user',
+            )
+          }
         end
 
         context 'artifactory class with version specified' do
