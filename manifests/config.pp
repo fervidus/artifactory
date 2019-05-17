@@ -9,6 +9,7 @@ class artifactory::config {
     $::artifactory::db_username or
     $::artifactory::db_password or
     $::artifactory::db_type) {
+
     if ($::artifactory::db_url and
         $::artifactory::db_username and
         $::artifactory::db_password and
@@ -46,7 +47,7 @@ class artifactory::config {
 
       file { "${::artifactory::artifactory_home}/etc/storage.properties":
         ensure => link,
-        target => "${::artifactory::artifactory_home}/etc/db.properties",
+        target => "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties",
       }
 
       if ($::artifactory::jdbc_driver_url) {
@@ -55,12 +56,12 @@ class artifactory::config {
         file { "${::artifactory::artifactory_home}/tomcat/lib/${file_name}":
           source => $::artifactory::jdbc_driver_url,
           mode   => '0775',
-          owner  => 'artifactory',
+          owner  => 'root',
         }
       }
     }
     else {
-      warning('Database port, hostname, username, password and type must be all be set, or not set. Install proceeding without DB configuration.')
+      warning('Database port, hostname, username, password and type must be all be set, or not set. Install proceeding without DB configuration.')#lint:ignore:140chars
     }
   }
 
@@ -92,5 +93,30 @@ class artifactory::config {
       owner   => 'artifactory',
       group   => 'artifactory',
     }
+  }
+
+  if ($::artifactory::db_automate) and ($::artifactory::db_type == 'mysql') {
+    include systemd::systemctl::daemon_reload
+    include ::artifactory::mysql
+
+    file { 'artif_service':
+      ensure => present,
+      path   => '/lib/systemd/system/artifactory.service',
+      source => 'puppet:///modules/artifactory/artifactory.service',
+      mode   => '0755',
+    }
+    file_line { 'limits':
+      ensure => present,
+      path   => '/etc/security/limits.conf',
+      line   => "artifactory soft nofile 32000 \n artifactory hard nofile 32000",
+    }
+    file { 'artifManage':
+      ensure => present,
+      path   => '/opt/jfrog/artifactory/bin/artifactoryManage.sh',
+      source => 'puppet:///modules/artifactory/artifactoryManage.sh',
+      mode   => '0775',
+    }
+    ~> Class['systemd::systemctl::daemon_reload']
+    contain ::mysql::server
   }
 }

@@ -77,6 +77,7 @@ All interaction for the server is done via `::artifactory`.
 * `artifactory::install`: Installs packages.
 * `artifactory::config`: Configures Artifactory.
 * `artifactory::service`: Manages service.
+* `artifactory::mysql`: Manages an automated mysql database
 
 ### Parameters
 
@@ -113,11 +114,19 @@ Tells the module whether or not to manage the java class. This defaults to true.
 
 If your organization actively manages the java installs across your environment set this to false.
 
+##### `root_password`
+
+Sets the root password for Puppet managed mysql database
+
 ##### `jdbc_driver_url`
 
 Sets the location for the jdbc driver. The built-in `file` type is used to retrieve the driver.
 
 This is required if using a new data source.
+
+##### `db_automate`
+
+Set to 'true' if you want Puppet to create a database. Only works with **mysql**. If `true`, we recommend using JDBC connector version 5.1.24. NOTE: Puppet may throw an error the first run while it waits for Artifactory to connect to database 
 
 ##### `db_type`
 

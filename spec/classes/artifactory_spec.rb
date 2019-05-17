@@ -56,6 +56,7 @@ describe 'artifactory' do
         context 'artifactory class with jdbc_driver_url parameter' do
           let(:params) do
             {
+              # super().merge('artifactory_home' => '/var/opt/jfrog/artifactory')
               'jdbc_driver_url' => 'puppet:///modules/my_module/mysql.jar',
               'db_url' => 'oracle://some_url',
               'db_username' => 'username',
@@ -70,7 +71,7 @@ describe 'artifactory' do
             is_expected.to contain_file('/var/opt/jfrog/artifactory/tomcat/lib/mysql.jar').with(
               'source' => 'puppet:///modules/my_module/mysql.jar',
               'mode' => '0775',
-              'owner' => 'artifactory',
+              'owner' => 'root',
             )
           }
 
@@ -86,7 +87,7 @@ describe 'artifactory' do
           it {
             is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/storage.properties').with(
               'ensure' => 'link',
-              'target' => '/var/opt/jfrog/artifactory/etc/db.properties',
+              'target' => '/var/opt/jfrog/artifactory/etc/.secrets/.temp.db.properties',
             )
           }
         end
