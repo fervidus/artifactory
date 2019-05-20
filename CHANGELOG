@@ -1,3 +1,9 @@
+2019-20-05 Release 2.0.19
+- Database secrets are now read from a temporary file, allowing for encrypted passwords
+- Master key for database can now be specified to re-use an existing database
+- Module can now provision a Mysql database and connect it to Artifactory
+- Smoothed out install script for better compatability with database
+
 2018-22-08 Release 2.0.16
 - Refactored for PDK and ensured all test pass.
 
