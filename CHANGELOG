@@ -1,4 +1,4 @@
-2019-20-05 Release 2.0.19
+2019-20-05 Release 2.1.0
 - Database secrets are now read from a temporary file, allowing for encrypted passwords
 - Master key for database can now be specified to re-use an existing database
 - Module can now provision a Mysql database and connect it to Artifactory
