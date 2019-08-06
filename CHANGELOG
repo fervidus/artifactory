@@ -1,3 +1,7 @@
+2019-14-08 Release 2.2.5
+- Alexander Hermes bumped java dependency
+- Frank Wall fixed bug where service restarted on .temp.db.properties change 
+
 2019-20-05 Release 2.1.0
 - Database secrets are now read from a temporary file, allowing for encrypted passwords
 - Master key for database can now be specified to re-use an existing database
