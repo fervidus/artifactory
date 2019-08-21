@@ -15,39 +15,88 @@ class artifactory::config {
         $::artifactory::db_password and
         $::artifactory::db_type
         ) {
+      if $::artifactory::use_temp_db_secrets {
+        file { "${::artifactory::artifactory_home}/etc/.secrets":
+          ensure => directory,
+          owner  => 'artifactory',
+          group  => 'artifactory',
+        }
 
-      file { "${::artifactory::artifactory_home}/etc/.secrets":
-        ensure => directory,
-        owner  => 'artifactory',
-        group  => 'artifactory',
-      }
+        file { "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties":
+          ensure  => file,
+          content => epp(
+            'artifactory/db.properties.epp',
+            {
+              db_url                         => $::artifactory::db_url,
+              db_username                    => $::artifactory::db_username,
+              db_password                    => $::artifactory::db_password,
+              db_type                        => $::artifactory::db_type,
+              binary_provider_type           => $::artifactory::binary_provider_type,
+              pool_max_active                => $::artifactory::pool_max_active,
+              pool_max_idle                  => $::artifactory::pool_max_idle,
+              binary_provider_cache_maxsize  => $::artifactory::binary_provider_cache_maxsize,
+              binary_provider_base_data_dir  => $::artifactory::binary_provider_base_data_dir,
+              binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
+              binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
+            }
+          ),
+          mode    => '0640',
+          owner   => 'artifactory',
+          group   => 'artifactory',
+        }
 
-      file { "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties":
-        ensure  => file,
-        content => epp(
-          'artifactory/db.properties.epp',
-          {
-            db_url                         => $::artifactory::db_url,
-            db_username                    => $::artifactory::db_username,
-            db_password                    => $::artifactory::db_password,
-            db_type                        => $::artifactory::db_type,
-            binary_provider_type           => $::artifactory::binary_provider_type,
-            pool_max_active                => $::artifactory::pool_max_active,
-            pool_max_idle                  => $::artifactory::pool_max_idle,
-            binary_provider_cache_maxsize  => $::artifactory::binary_provider_cache_maxsize,
-            binary_provider_base_data_dir  => $::artifactory::binary_provider_base_data_dir,
-            binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
-            binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
-          }
-        ),
-        mode    => '0640',
-        owner   => 'artifactory',
-        group   => 'artifactory',
-      }
+        file { "${::artifactory::artifactory_home}/etc/storage.properties":
+          ensure => link,
+          target => "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties",
+        }
 
-      file { "${::artifactory::artifactory_home}/etc/storage.properties":
-        ensure => link,
-        target => "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties",
+      } else {
+        # Make sure we have correct mode and ownership
+        file { "${::artifactory::artifactory_home}/etc/db.properties":
+          ensure  => file,
+          mode    => '0640',
+          owner   => 'artifactory',
+          group   => 'artifactory',
+        }
+
+        $_dbpropchanges = {
+          'type'     => $::artifactory::db_type,
+          'url'      => $::artifactory::db_url,
+          'driver'   => 'oracle.jdbc.OracleDriver',
+          'username' => $::artifactory::db_username,
+        }
+        $dbpropchanges = $_dbpropchanges.reduce([]) | $memo, $value | {
+        # lint:ignore:140chars
+          $memo + "set \"${value[0]}\" \"${value[1]}\""
+        # lint:endignore
+        }
+        augeas { 'db.properties':
+          context => '/files/var/opt/jfrog/artifactory/etc/db.properties',
+          incl    => '/var/opt/jfrog/artifactory/etc/db.properties',
+          lens    => 'Properties.lns',
+          changes => $dbpropchanges,
+          require => [Class['::artifactory::install']],
+          notify  => Class['::artifactory::service'],
+        }
+
+        $_dbpropchanges_pw = {
+          'password' => $::artifactory::db_password,
+        }
+        $dbpropchanges_pw = $_dbpropchanges_pw.reduce([]) | $memo, $value | {
+        # lint:ignore:140chars
+          $memo + "set \"${value[0]}\" \"${value[1]}\""
+        # lint:endignore
+        }
+        augeas { 'db.properties.pw':
+          context => '/files/var/opt/jfrog/artifactory/etc/db.properties',
+          incl    => '/var/opt/jfrog/artifactory/etc/db.properties',
+          lens    => 'Properties.lns',
+          changes => $dbpropchanges_pw,
+          onlyif  => 'match /files/var/opt/jfrog/artifactory/etc/db.properties/password size == 0',
+          require => [Class['::artifactory::install']],
+          notify  => Class['::artifactory::service'],
+        }
+
       }
 
       if ($::artifactory::jdbc_driver_url) {

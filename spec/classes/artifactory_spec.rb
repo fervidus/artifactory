@@ -90,6 +90,63 @@ describe 'artifactory' do
           }
         end
 
+        context 'artifactory class with use_temp_db_secrets set to false' do
+          let(:params) do
+            {
+              'use_temp_db_secrets' => false,
+              # super().merge('artifactory_home' => '/var/opt/jfrog/artifactory')
+              'jdbc_driver_url' => 'puppet:///modules/my_module/mysql.jar',
+              'db_url' => 'oracle://some_url',
+              'db_username' => 'foouser',
+              'db_password' => 'foopw',
+              'db_type' => 'oracle',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+
+          it {
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/tomcat/lib/mysql.jar').with(
+              'source' => 'puppet:///modules/my_module/mysql.jar',
+              'mode' => '0775',
+              'owner' => 'root',
+            )
+          }
+
+          it {
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/db.properties').with(
+              'ensure' => 'file',
+              'mode' => '0640',
+              'owner' => 'artifactory',
+              'group' => 'artifactory',
+            )
+          }
+          it do
+            should contain_augeas('db.properties').with({
+              'changes' => [
+                "set \"type\" \"oracle\"",
+                "set \"url\" \"oracle://some_url\"",
+                "set \"driver\" \"oracle.jdbc.OracleDriver\"",
+                "set \"username\" \"foouser\"",
+              ],
+              'require' => ['Class[Artifactory::Install]'],
+              'notify'  => 'Class[Artifactory::Service]',
+            })
+          end
+          it do
+            should contain_augeas('db.properties.pw').with({
+              'changes' => [
+                "set \"password\" \"foopw\"",
+              ],
+              'onlyif'  => 'match /files/var/opt/jfrog/artifactory/etc/db.properties/password size == 0',
+              'require' => ['Class[Artifactory::Install]'],
+              'notify'  => 'Class[Artifactory::Service]',
+            })
+          end
+
+
+        end
+
         context 'artifactory class with manage_java set to false' do
           let(:params) do
             {
