@@ -124,6 +124,15 @@ Sets the location for the jdbc driver. The built-in `file` type is used to retri
 
 This is required if using a new data source.
 
+##### `use_temp_db_secrets`
+
+Set to true(default) if you want Artifactory to delete temporary db.properties file on service start.
+https://www.jfrog.com/confluence/display/RTF/Configuring+Security#ConfiguringSecurity-HardeningSecurityforSecrets
+
+Set to false if you would like db.properties file to be written to ${::artifactory::artifactory_home}/etc/db.properties
+and managed with Augeas, taking into account Artifactory encrypts password field on startup. Management with Augeas
+allows user to add additional database and storage options to db.properties without Puppet touching.
+
 ##### `db_automate`
 
 Set to 'true' if you want Puppet to create a database. Only works with **mysql**. If `true`, we recommend using JDBC connector version 5.1.24. NOTE: Puppet may throw an error the first run while it waits for Artifactory to connect to database 
