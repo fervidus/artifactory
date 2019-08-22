@@ -121,6 +121,12 @@ describe 'artifactory' do
               'group' => 'artifactory',
             )
           }
+          it {
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/storage.properties').with(
+              'ensure' => 'link',
+              'target' => '/var/opt/jfrog/artifactory/etc/db.properties',
+            )
+          }
           it do
             should contain_augeas('db.properties').with({
               'changes' => [
@@ -128,6 +134,7 @@ describe 'artifactory' do
                 "set \"url\" \"oracle://some_url\"",
                 "set \"driver\" \"oracle.jdbc.OracleDriver\"",
                 "set \"username\" \"foouser\"",
+                "set \"binary.provider.type\" \"filesystem\"",
               ],
               'require' => ['Class[Artifactory::Install]'],
               'notify'  => 'Class[Artifactory::Service]',

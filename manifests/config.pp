@@ -58,13 +58,62 @@ class artifactory::config {
           owner   => 'artifactory',
           group   => 'artifactory',
         }
-
-        $_dbpropchanges = {
-          'type'     => $::artifactory::db_type,
-          'url'      => $::artifactory::db_url,
-          'driver'   => 'oracle.jdbc.OracleDriver',
-          'username' => $::artifactory::db_username,
+        file { "${::artifactory::artifactory_home}/etc/storage.properties":
+          ensure => link,
+          target => "${::artifactory::artifactory_home}/etc/db.properties",
         }
+
+        $db_driver = $::artifactory::db_type ? {
+          'derby'      => 'org.apache.derby.jdbc.EmbeddedDriver',
+          'mssql'      => 'com.microsoft.sqlserver.jdbc.SQLServerDriver',
+          'mysql'      => 'com.mysql.jdbc.Driver',
+          'oracle'     => 'oracle.jdbc.OracleDriver',
+          'postgresql' => 'org.postgresql.Driver',
+          default      => 'not valid',
+        }
+
+        # Following logic in templates/db.properties.epp
+        case $::artifactory::binary_provider_type {
+          'filesystem',
+          'fullDb',
+          'cachedFS': {
+            $binary_provider_type = $::artifactory::binary_provider_type
+          }
+          'fullDbDirect': {
+            $binary_provider_type = undef
+          }
+          default: {
+            $binary_provider_type = 'filesystem'
+          }
+        }
+
+        # Following logic in templates/db.properties.epp
+        if $binary_provider_type == 'filesystem' and ! $::artifactory::binary_provider_filesystem_dir {
+            $mapped_provider_filesystem_dir = 'filestore'
+        } else {
+            $mapped_provider_filesystem_dir = $::artifactory::binary_provider_filesystem_dir
+        }
+        if $::artifactory::binary_provider_base_data_dir {
+          $binary_provider_filesystem_dir = "${::artifactory::binary_provider_base_data_dir}/${mapped_provider_filesystem_dir}"
+        }else{
+          $binary_provider_filesystem_dir = undef
+        }
+
+        $__dbpropchanges = {
+          'type'                           => $::artifactory::db_type,
+          'url'                            => $::artifactory::db_url,
+          'driver'                         => $db_driver,
+          'username'                       => $::artifactory::db_username,
+          'binary.provider.type'           => $binary_provider_type,
+          'pool.max.active'                => $::artifactory::pool_max_active,
+          'pool.max.idle'                  => $::artifactory::pool_max_idle,
+          'binary.provider.cache.maxsize'  => $::artifactory::binary_provider_cache_maxsize,
+          'binary.provider.filesystem.dir' => $binary_provider_filesystem_dir,
+          'binary.provider.cache_dir'      => $::artifactory::binary_provider_cache_dir,
+        }
+        # We only care to set values that have actually be defined.
+        # Therefore empty ones from our collection
+        $_dbpropchanges = delete_undef_values($__dbpropchanges)
         $dbpropchanges = $_dbpropchanges.reduce([]) | $memo, $value | {
         # lint:ignore:140chars
           $memo + "set \"${value[0]}\" \"${value[1]}\""
@@ -79,19 +128,17 @@ class artifactory::config {
           notify  => Class['::artifactory::service'],
         }
 
-        $_dbpropchanges_pw = {
-          'password' => $::artifactory::db_password,
-        }
-        $dbpropchanges_pw = $_dbpropchanges_pw.reduce([]) | $memo, $value | {
-        # lint:ignore:140chars
-          $memo + "set \"${value[0]}\" \"${value[1]}\""
-        # lint:endignore
-        }
+        # We treat db_password differently
+        # Artifactory likes to encrypt the password after starting.
+        # Onlyif statement will allow us to set password if the password
+        # has not be set yet, else it is not touched.
+        # To update password from hiera, remove the password field in db.properties,
+        # to update locally, just update and Artifactory will encrypt.
         augeas { 'db.properties.pw':
           context => '/files/var/opt/jfrog/artifactory/etc/db.properties',
           incl    => '/var/opt/jfrog/artifactory/etc/db.properties',
           lens    => 'Properties.lns',
-          changes => $dbpropchanges_pw,
+          changes => [ "set \"password\" \"$::artifactory::db_password\"" ],
           onlyif  => 'match /files/var/opt/jfrog/artifactory/etc/db.properties/password size == 0',
           require => [Class['::artifactory::install']],
           notify  => Class['::artifactory::service'],
@@ -110,6 +157,13 @@ class artifactory::config {
       }
     }
     else {
+      # We are making an assumption that not passing db_username and db_password we are changing to derby
+      # and do not need db.properties file, but least be explicit in cleaning up.
+      if $::artifactory::db_type == 'derby' {
+        file { "${::artifactory::artifactory_home}/etc/db.properties":
+          ensure  => absent,
+        }
+      }
       warning('Database port, hostname, username, password and type must be all be set, or not set. Install proceeding without DB configuration.')#lint:ignore:140chars
     }
   }
