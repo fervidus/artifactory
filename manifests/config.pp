@@ -120,8 +120,8 @@ class artifactory::config {
         # lint:endignore
         }
         augeas { 'db.properties':
-          context => '/files/var/opt/jfrog/artifactory/etc/db.properties',
-          incl    => '/var/opt/jfrog/artifactory/etc/db.properties',
+          context => "/files${::artifactory::artifactory_home}/etc/db.properties",
+          incl    => "${::artifactory::artifactory_home}/etc/db.properties",
           lens    => 'Properties.lns',
           changes => $dbpropchanges,
           require => [Class['::artifactory::install']],
@@ -135,11 +135,11 @@ class artifactory::config {
         # To update password from hiera, remove the password field in db.properties,
         # to update locally, just update and Artifactory will encrypt.
         augeas { 'db.properties.pw':
-          context => '/files/var/opt/jfrog/artifactory/etc/db.properties',
-          incl    => '/var/opt/jfrog/artifactory/etc/db.properties',
+          context => "/files${::artifactory::artifactory_home}/etc/db.properties",
+          incl    => "${::artifactory::artifactory_home}/etc/db.properties",
           lens    => 'Properties.lns',
           changes => [ "set \"password\" \"$::artifactory::db_password\"" ],
-          onlyif  => 'match /files/var/opt/jfrog/artifactory/etc/db.properties/password size == 0',
+          onlyif  => "match /files${::artifactory::artifactory_home}/etc/db.properties/password size == 0",
           require => [Class['::artifactory::install']],
           notify  => Class['::artifactory::service'],
         }
