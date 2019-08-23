@@ -1,5 +1,6 @@
 fixtures:
   forge_modules:
+    augeas:       "puppetlabs/augeas_core"
     stdlib:       "puppetlabs/stdlib"
     java:         "puppetlabs/java"
     yumrepo_core: "puppetlabs/yumrepo_core"
