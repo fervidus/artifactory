@@ -53,10 +53,10 @@ class artifactory::config {
       } else {
         # Make sure we have correct mode and ownership
         file { "${::artifactory::artifactory_home}/etc/db.properties":
-          ensure  => file,
-          mode    => '0640',
-          owner   => 'artifactory',
-          group   => 'artifactory',
+          ensure => file,
+          mode   => '0640',
+          owner  => 'artifactory',
+          group  => 'artifactory',
         }
         file { "${::artifactory::artifactory_home}/etc/storage.properties":
           ensure => link,
@@ -138,7 +138,7 @@ class artifactory::config {
           context => "/files${::artifactory::artifactory_home}/etc/db.properties",
           incl    => "${::artifactory::artifactory_home}/etc/db.properties",
           lens    => 'Properties.lns',
-          changes => [ "set \"password\" \"$::artifactory::db_password\"" ],
+          changes => [ "set \"password\" \"${::artifactory::db_password}\"" ],
           onlyif  => "match /files${::artifactory::artifactory_home}/etc/db.properties/password size == 0",
           require => [Class['::artifactory::install']],
           notify  => Class['::artifactory::service'],

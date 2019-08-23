@@ -128,30 +128,24 @@ describe 'artifactory' do
             )
           }
           it do
-            should contain_augeas('db.properties').with({
-              'changes' => [
-                "set \"type\" \"oracle\"",
-                "set \"url\" \"oracle://some_url\"",
-                "set \"driver\" \"oracle.jdbc.OracleDriver\"",
-                "set \"username\" \"foouser\"",
-                "set \"binary.provider.type\" \"filesystem\"",
-              ],
-              'require' => ['Class[Artifactory::Install]'],
-              'notify'  => 'Class[Artifactory::Service]',
-            })
+            is_expected.to contain_augeas('db.properties').with('changes' => [
+                                                                  'set "type" "oracle"',
+                                                                  'set "url" "oracle://some_url"',
+                                                                  'set "driver" "oracle.jdbc.OracleDriver"',
+                                                                  'set "username" "foouser"',
+                                                                  'set "binary.provider.type" "filesystem"',
+                                                                ],
+                                                                'require' => ['Class[Artifactory::Install]'],
+                                                                'notify'  => 'Class[Artifactory::Service]')
           end
           it do
-            should contain_augeas('db.properties.pw').with({
-              'changes' => [
-                "set \"password\" \"foopw\"",
-              ],
-              'onlyif'  => 'match /files/var/opt/jfrog/artifactory/etc/db.properties/password size == 0',
-              'require' => ['Class[Artifactory::Install]'],
-              'notify'  => 'Class[Artifactory::Service]',
-            })
+            is_expected.to contain_augeas('db.properties.pw').with('changes' => [
+                                                                     'set "password" "foopw"',
+                                                                   ],
+                                                                   'onlyif'  => 'match /files/var/opt/jfrog/artifactory/etc/db.properties/password size == 0',
+                                                                   'require' => ['Class[Artifactory::Install]'],
+                                                                   'notify'  => 'Class[Artifactory::Service]')
           end
-
-
         end
 
         context 'artifactory class with manage_java set to false' do

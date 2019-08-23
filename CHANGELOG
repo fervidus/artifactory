@@ -1,3 +1,11 @@
+2019-22-08 Release 2.2.7
+
+Several fixes by Ron Aughenbaugh from University of Maryland. Go Terrapins.
+
+* Manage db.properties with augeas
+* Added optional params to db.properties with augeas
+* Fix hardcoding of paths
+
 2019-14-08 Release 2.2.5
 - Alexander Hermes bumped java dependency
 - Frank Wall fixed bug where service restarted on .temp.db.properties change 
