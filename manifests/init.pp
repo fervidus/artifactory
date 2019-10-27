@@ -3,12 +3,15 @@
 #
 #
 class artifactory(
+  Enum['oss', 'pro', 'enterprise'] $edition                                                = 'oss',
   Boolean $manage_java                                                                     = true,
   Boolean $manage_repo                                                                     = true,
   Boolean $use_temp_db_secrets                                                             = true,
   String $yum_name                                                                         = 'bintray-jfrog-artifactory-rpms',
   String $yum_baseurl                                                                      = 'http://jfrog.bintray.com/artifactory-rpms',
+  String $yum_baseurl_pro                                                                  = 'http://jfrog.bintray.com/artifactory-pro-rpms',
   String $package_name                                                                     = 'jfrog-artifactory-oss',
+  String $package_name_pro                                                                 = 'jfrog-artifactory-pro',
   String $package_version                                                                  = 'present',
   String $artifactory_home                                                                 = '/var/opt/jfrog/artifactory',
   Optional[String] $root_password                                                          = 'password',
@@ -26,6 +29,7 @@ class artifactory(
   Optional[String] $binary_provider_filesystem_dir                                         = undef,
   Optional[String] $binary_provider_cache_dir                                              = undef,
   Optional[String] $master_key                                                             = undef,
+  Optional[String] $license_key                                                            = undef,
 ) {
 
   $service_name = 'artifactory'

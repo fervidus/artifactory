@@ -4,9 +4,18 @@
 #
 class artifactory::yum {
   if $::artifactory::manage_repo {
+    case $artifactory::edition {
+      'pro' : {
+        $_url = $artifactory::yum_baseurl_pro
+      }
+      default : {
+        $_url = $artifactory::yum_baseurl
+      }
+    }
+
     # Add the jfrog yum repo
     yumrepo { $::artifactory::yum_name:
-      baseurl  => $::artifactory::yum_baseurl,
+      baseurl  => $_url,
       descr    => $::artifactory::yum_name,
       gpgcheck => 0,
       enabled  => 1,
