@@ -200,6 +200,14 @@ class artifactory::config {
     }
   }
 
+  if ($::artifactory::license_key) {
+    file { "${::artifactory::artifactory_home}/etc/artifactory.lic":
+      ensure  => file,
+      content => $::artifactory::license_key,
+      mode    => '0664',
+    }
+  }
+
   if ($::artifactory::db_automate) and ($::artifactory::db_type == 'mysql') {
     include systemd::systemctl::daemon_reload
     include ::artifactory::mysql
