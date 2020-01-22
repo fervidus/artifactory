@@ -65,6 +65,7 @@ class artifactory::config {
 
         $db_driver = $::artifactory::db_type ? {
           'derby'      => 'org.apache.derby.jdbc.EmbeddedDriver',
+          'mariadb'    => 'org.mariadb.jdbc.Driver',
           'mssql'      => 'com.microsoft.sqlserver.jdbc.SQLServerDriver',
           'mysql'      => 'com.mysql.jdbc.Driver',
           'oracle'     => 'oracle.jdbc.OracleDriver',

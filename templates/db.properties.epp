@@ -1,18 +1,19 @@
-<%- | Enum['derby', 'mssql', 'mysql', 'oracle', 'postgresql']  $db_type,
-      String                                                   $db_url,
-      String                                                   $db_username,
-      String                                                   $db_password,
-      Enum['filesystem', 'fullDb', 'cachedFS', 'fullDbDirect'] $binary_provider_type           = 'filesystem',
-      Optional[Integer]                                        $pool_max_active                = undef,
-      Optional[Integer]                                        $pool_max_idle                  = undef,
-      Optional[Integer]                                        $binary_provider_cache_maxsize  = undef,
-      Optional[String]                                         $binary_provider_base_data_dir  = undef,
-      Optional[String]                                         $binary_provider_filesystem_dir = undef,
-      Optional[String]                                         $binary_provider_cache_dir      = undef
+<%- | Enum['derby', 'mariadb', 'mssql', 'mysql', 'oracle', 'postgresql']  $db_type,
+      String                                                              $db_url,
+      String                                                              $db_username,
+      String                                                              $db_password,
+      Enum['filesystem', 'fullDb', 'cachedFS', 'fullDbDirect']            $binary_provider_type           = 'filesystem',
+      Optional[Integer]                                                   $pool_max_active                = undef,
+      Optional[Integer]                                                   $pool_max_idle                  = undef,
+      Optional[Integer]                                                   $binary_provider_cache_maxsize  = undef,
+      Optional[String]                                                    $binary_provider_base_data_dir  = undef,
+      Optional[String]                                                    $binary_provider_filesystem_dir = undef,
+      Optional[String]                                                    $binary_provider_cache_dir      = undef
 | -%>
 <%-
 $db_driver = $db_type ? {
     'derby'      => 'org.apache.derby.jdbc.EmbeddedDriver',
+    'mariadb'    => 'org.mariadb.jdbc.Driver',
     'mssql'      => 'com.microsoft.sqlserver.jdbc.SQLServerDriver',
     'mysql'      => 'com.mysql.jdbc.Driver',
     'oracle'     => 'oracle.jdbc.OracleDriver',
