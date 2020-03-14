@@ -26,8 +26,9 @@ describe 'artifactory' do
             is_expected.to contain_yumrepo('bintray-jfrog-artifactory-rpms').with(
               'baseurl'  => 'http://jfrog.bintray.com/artifactory-rpms',
               'descr'    => 'bintray-jfrog-artifactory-rpms',
-              'gpgcheck' => '0',
+              'gpgcheck' => '1',
               'enabled'  => '1',
+              'gpgkey'   => 'http://jfrog.bintray.com/artifactory-rpms/repodata/repomd.xml.key',
             )
           }
         end
