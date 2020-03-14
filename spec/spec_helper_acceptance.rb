@@ -15,5 +15,7 @@ RSpec.configure do |c|
     if host[:platform] =~ %r{el-7-x86_64} && host[:hypervisor] =~ %r{docker}
       on(host, "sed -i '/nodocs/d' /etc/yum.conf")
     end
+    # Install additional modules for soft deps
+    install_module_from_forge('puppetlabs-postgresql', '>= 6.4.0 < 7.0.0')
   end
 end
