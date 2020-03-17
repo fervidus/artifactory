@@ -16,7 +16,7 @@ class artifactory(
   String $artifactory_home                                                                 = '/var/opt/jfrog/artifactory',
   Optional[String] $root_password                                                          = 'password',
   Optional[String] $jdbc_driver_url                                                        = undef,
-  Optional[Enum['derby', 'mssql', 'mysql', 'oracle', 'postgresql']] $db_type               = undef,
+  Optional[Enum['derby', 'mariadb', 'mssql', 'mysql', 'oracle', 'postgresql']] $db_type    = undef,
   Optional[String] $db_url                                                                 = undef,
   Optional[String] $db_username                                                            = undef,
   Optional[String] $db_password                                                            = undef,

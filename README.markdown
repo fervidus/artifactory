@@ -135,11 +135,11 @@ allows user to add additional database and storage options to db.properties with
 
 ##### `db_automate`
 
-Set to 'true' if you want Puppet to create a database. Only works with **mysql**. If `true`, we recommend using JDBC connector version 5.1.24. NOTE: Puppet may throw an error the first run while it waits for Artifactory to connect to database 
+Set to 'true' if you want Puppet to create a database. Only works with **mysql**. If `true`, we recommend using JDBC connector version 5.1.24. NOTE: Puppet may throw an error the first run while it waits for Artifactory to connect to database
 
 ##### `db_type`
 
-Only required for database configuration. The type of database to configure for. Valid values are 'mssql', 'mysql', 'oracle', 'postgresql'.
+Only required for database configuration. The type of database to configure for. Valid values are 'mariadb', 'mssql', 'mysql', 'oracle', 'postgresql'.
 
 ##### `db_url`
 
