@@ -27,6 +27,12 @@ group :development do
   gem "puppet-module-posix-dev-r#{minor_version}",     require: false, platforms: [:ruby]
   gem "puppet-module-win-default-r#{minor_version}",   require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "puppet-module-win-dev-r#{minor_version}",       require: false, platforms: [:mswin, :mingw, :x64_mingw]
+  gem 'beaker-rspec'
+  gem 'beaker-vagrant'
+  gem 'beaker-docker'
+  gem 'beaker-puppet_install_helper'
+  gem 'beaker-module_install_helper'
+  gem 'irb'
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
