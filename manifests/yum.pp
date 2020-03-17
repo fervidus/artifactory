@@ -17,8 +17,9 @@ class artifactory::yum {
     yumrepo { $::artifactory::yum_name:
       baseurl  => $_url,
       descr    => $::artifactory::yum_name,
-      gpgcheck => 0,
+      gpgcheck => 1,
       enabled  => 1,
+      gpgkey   => "${_url}/repodata/repomd.xml.key",
     }
   }
 }
