@@ -27,7 +27,7 @@ describe 'artifactory class' do
     end
   end
 
-  context 'with postgresql' do
+  context 'with postgresql', if: fact('os.release.major') == '7' do
     it 'works idempotently with no errors' do
       pp = <<-PUPPETCODE
       class {'postgresql::globals':

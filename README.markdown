@@ -62,7 +62,7 @@ class { '::artifactory':
 ### Artifactory with PostgreSQL database
 
 This installs PostgreSQL 11 and artifactory. PostgreSQL 12 isn't supported yet
-by Artifactory.
+by Artifactory. This code is tested on CentOS 7.
 
 ```puppet
 class {'postgresql::globals':

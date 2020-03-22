@@ -24,11 +24,11 @@ describe 'artifactory' do
           it { is_expected.to contain_package('java-1.7.0-openjdk').with_ensure('absent') }
           it {
             is_expected.to contain_yumrepo('bintray-jfrog-artifactory-rpms').with(
-              'baseurl'  => 'http://jfrog.bintray.com/artifactory-rpms',
+              'baseurl'  => 'https://jfrog.bintray.com/artifactory-rpms',
               'descr'    => 'bintray-jfrog-artifactory-rpms',
               'gpgcheck' => '1',
               'enabled'  => '1',
-              'gpgkey'   => 'http://jfrog.bintray.com/artifactory-rpms/repodata/repomd.xml.key',
+              'gpgkey'   => 'https://jfrog.bintray.com/artifactory-rpms/repodata/repomd.xml.key',
             )
           }
         end
