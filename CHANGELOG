@@ -1,3 +1,10 @@
+2020-06-04 Release 2.2.8
+
+Several fixes by Tim Meusel.
+
+* Litmus testing added
+* Add PostGres example
+
 2019-22-08 Release 2.2.7
 
 Several fixes by Ron Aughenbaugh from University of Maryland. Go Terrapins.

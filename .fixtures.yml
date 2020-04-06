@@ -1,11 +1,18 @@
 fixtures:
+  repositories:
+    facts: 'https://github.com/puppetlabs/puppetlabs-facts.git'
+    puppet_agent: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
+    provision: 'https://github.com/puppetlabs/provision.git'
   forge_modules:
+    apt:          "puppetlabs/apt"
     augeas:       "puppetlabs/augeas_core"
+    concat:       "puppetlabs/concat"
     stdlib:       "puppetlabs/stdlib"
     java:         "puppetlabs/java"
     yumrepo_core: "puppetlabs/yumrepo_core"
     wget:         "puppet/wget"
     mysql:        "puppetlabs/mysql"
     systemd:      "camptocamp/systemd"
+    postgresql:   "puppetlabs/postgresql"
   symlinks:
     artifactory:  "#{source_dir}"

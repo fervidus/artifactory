@@ -9,8 +9,7 @@ describe 'artifactory class' do
       ARTIFACTORY_TEST
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      idempotent_apply(pp)
     end
 
     describe package('jfrog-artifactory-oss') do
@@ -27,7 +26,7 @@ describe 'artifactory class' do
     end
   end
 
-  context 'with postgresql', if: fact('os.release.major') == '7' do
+  context 'with postgresql' do # , if: fact('os.release.major') == '7' do
     it 'works idempotently with no errors' do
       pp = <<-PUPPETCODE
       class {'postgresql::globals':
@@ -50,8 +49,7 @@ describe 'artifactory class' do
       PUPPETCODE
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      idempotent_apply(pp)
     end
 
     describe package('jfrog-artifactory-oss') do

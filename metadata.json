@@ -1,6 +1,6 @@
 {
   "name": "fervid-artifactory",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "author": "Fervid",
   "summary": "Installs and configures Artifactory OSS",
   "license": "Apache-2.0",
@@ -47,7 +47,7 @@
       "version_requirement": ">= 4.4.0 < 6.0.0"
     }
   ],
-  "pdk-version": "1.12.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates#1.10.0",
-  "template-ref": "1.10.0-0-gbba9ac3"
+  "pdk-version": "1.17.0",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#1.17.0",
+  "template-ref": "tags/1.17.0-0-gd3a4319"
 }

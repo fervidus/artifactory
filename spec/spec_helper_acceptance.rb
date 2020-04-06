@@ -1,21 +1,6 @@
-require 'beaker-rspec'
-require 'beaker-puppet'
-require 'beaker/puppet_install_helper'
-require 'beaker/module_install_helper'
+# frozen_string_literal: true
 
-run_puppet_install_helper unless ENV['BEAKER_provision'] == 'no'
-install_ca_certs unless ENV['PUPPET_INSTALL_TYPE'] =~ %r{pe}i
-install_module_on(hosts)
-install_module_dependencies_on(hosts)
+require 'puppet_litmus'
+require 'spec_helper_acceptance_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_acceptance_local.rb'))
 
-RSpec.configure do |c|
-  # Readable test descriptions
-  c.formatter = :documentation
-  hosts.each do |host|
-    if host[:platform] =~ %r{el-7-x86_64} && host[:hypervisor] =~ %r{docker}
-      on(host, "sed -i '/nodocs/d' /etc/yum.conf")
-    end
-    # Install additional modules for soft deps
-    install_module_from_forge('puppetlabs-postgresql', '>= 6.4.0 < 7.0.0')
-  end
-end
+PuppetLitmus.configure!

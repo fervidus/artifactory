@@ -1,0 +1,8 @@
+---
+vagrant:
+  provisioner: vagrant
+  params:
+    hyperv_smb_username: someone
+    hyperv_smb_password: something
+  images:
+   - bento/centos-7.7
