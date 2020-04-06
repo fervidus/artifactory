@@ -59,6 +59,31 @@ class { '::artifactory':
 }
 ~~~
 
+### Artifactory with PostgreSQL database
+
+This installs PostgreSQL 11 and artifactory. PostgreSQL 12 isn't supported yet
+by Artifactory. This code is tested on CentOS 7.
+
+```puppet
+class {'postgresql::globals':
+  version => '11',
+  manage_package_repo => true,
+}
+include postgresql::server
+
+postgresql::server::db {'artifactory':
+  user => 'artifactory',
+  password => postgresql_password('artifactory', 'RANDOM_PASSWORD_SHOULD_BE_INSERTED_HERE'),
+}
+class { 'artifactory':
+  db_type => 'postgresql',
+  db_username => 'artifactory',
+  db_password => '45y43y58y435hitr',
+  db_url      => 'jdbc:postgresql:127.0.0.1:5432/artifactory',
+  require     => Postgresql::Server::Db['artifactory']
+}
+```
+
 ## Usage
 
 All interaction for the server is done via `::artifactory`.
