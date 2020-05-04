@@ -16,11 +16,9 @@
 
 ## Overview
 
-This ONLY install Artifactory OSS.
+This will install Artifactory OSS or PRO.
 
-If you are looking for the commercial installation look at:
-
-Artifactory PRO: https://forge.puppet.com/fervid/artifactory_pro
+If you are looking for the HA installation look at:
 
 Artifactory HA: https://forge.puppet.com/fervid/artifactory_ha
 
@@ -81,6 +79,18 @@ class { 'artifactory':
   db_password => '45y43y58y435hitr',
   db_url      => 'jdbc:postgresql:127.0.0.1:5432/artifactory',
   require     => Postgresql::Server::Db['artifactory']
+}
+```
+
+### Install commercial version
+
+To install a commercial version of Artifactory:
+
+```puppet
+class { '::artifactory':
+  edition     => 'pro',
+  license_key => 'ABCDEFG1234567890',
+  ...
 }
 ```
 
@@ -229,8 +239,8 @@ Optional setting for the master key that Artifactory uses to connect to the data
 
 This module has been tested on:
 
-* RedHat Enterprise Linux 5, 6, 7
-* CentOS 5, 6, 7
+* RedHat Enterprise Linux 5, 6, 7, 8
+* CentOS 5, 6, 7, 8
 
 ## Development
 
