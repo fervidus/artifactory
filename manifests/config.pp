@@ -32,6 +32,50 @@ class artifactory::config {
     $_security_dir = "${::artifactory::artifactory_home}/etc/artifactory/security"
   }
 
+  # Map binary provider types to their actual configuration options.
+  $_types = {
+    'filesystem' => 'file-system',
+    'fullDb' => 'full-db',
+    'cachedFS' => 'cache-fs',
+    'fullDbDirect' => 'full-db-direct',
+  }
+
+  # Check if a value was provided that need to be replaced.
+  if $::artifactory::binary_provider_type and $_types[$::artifactory::binary_provider_type] {
+    $_binary_provider_type = $_types[$::artifactory::binary_provider_type]
+  } else {
+    # Use the option unmodified.
+    $_binary_provider_type = $::artifactory::binary_provider_type
+  }
+
+  # Determine the base type of the binary provider by grouping similar
+  # types. Required to determine the directory in the next step.
+  case $_types[$::artifactory::binary_provider_type] {
+    'file-system',
+    'full-db',
+    'cache-fs': {
+      $binary_provider_type = $_binary_provider_type
+    }
+    'full-db-direct': {
+      $binary_provider_type = undef
+    }
+    default: {
+      $binary_provider_type = 'file-system'
+    }
+  }
+
+  # Determine the directory for the chosen binary provider.
+  if ($binary_provider_type == 'file-system') and ! $::artifactory::binary_provider_filesystem_dir {
+      $mapped_provider_filesystem_dir = 'filestore'
+  } else {
+      $mapped_provider_filesystem_dir = $::artifactory::binary_provider_filesystem_dir
+  }
+  if $::artifactory::binary_provider_base_data_dir {
+    $binary_provider_filesystem_dir = "${::artifactory::binary_provider_base_data_dir}/${mapped_provider_filesystem_dir}"
+  } else {
+    $binary_provider_filesystem_dir = undef
+  }
+
   # Check if a DB configuration was provided.
   if ($::artifactory::db_url or
       $::artifactory::db_username or
@@ -53,54 +97,6 @@ class artifactory::config {
           mode   => '0775',
           owner  => 'root',
         }
-      }
-
-      # List of legacy binary provider types and their new values.
-      $_types = {
-        'filesystem' => 'file-system',
-        'fullDb' => 'full-db',
-        'cachedFS' => 'cache-fs',
-        'fullDbDirect' => 'full-db-direct',
-      }
-
-      # Check if a legacy value was provided that need to be replaced on
-      # recent versions of Artifactory.
-      if ($_legacy == false) and $::artifactory::binary_provider_type and $_types[$::artifactory::binary_provider_type] {
-        $_binary_provider_type = $_types[$::artifactory::binary_provider_type]
-      } else {
-        # Use the legacy name.
-        $_binary_provider_type = $::artifactory::binary_provider_type
-      }
-
-      # Determine the base type of the binary provider by grouping similar
-      # types. Required to determine the directory in the next step.
-      case $_types[$::artifactory::binary_provider_type] {
-        'file-system',
-        'full-db',
-        'cache-fs': {
-          $binary_provider_type = $_binary_provider_type
-        }
-        'full-db-direct': {
-          $binary_provider_type = undef
-        }
-        default: {
-          $binary_provider_type = $_legacy ? {
-            true    => 'filesystem',
-            default => 'file-system',
-          }
-        }
-      }
-
-      # Determine the directory for the chosen binary provider.
-      if ($binary_provider_type =~ Enum['filesystem','file-system']) and ! $::artifactory::binary_provider_filesystem_dir {
-          $mapped_provider_filesystem_dir = 'filestore'
-      } else {
-          $mapped_provider_filesystem_dir = $::artifactory::binary_provider_filesystem_dir
-      }
-      if $::artifactory::binary_provider_base_data_dir {
-        $binary_provider_filesystem_dir = "${::artifactory::binary_provider_base_data_dir}/${mapped_provider_filesystem_dir}"
-      } else {
-        $binary_provider_filesystem_dir = undef
       }
 
       # Determine type of database.
@@ -148,12 +144,13 @@ class artifactory::config {
               db_username                    => $::artifactory::db_username,
               db_password                    => $::artifactory::db_password,
               db_type                        => $::artifactory::db_type,
+              db_driver                      => $db_driver,
               binary_provider_type           => $binary_provider_type,
               pool_max_active                => $::artifactory::pool_max_active,
               pool_max_idle                  => $::artifactory::pool_max_idle,
               binary_provider_cache_maxsize  => $::artifactory::binary_provider_cache_maxsize,
               binary_provider_base_data_dir  => $::artifactory::binary_provider_base_data_dir,
-              binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
+              binary_provider_filesystem_dir => $binary_provider_filesystem_dir,
               binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
             }
           ),
@@ -243,10 +240,10 @@ class artifactory::config {
     content => epp(
       'artifactory/binarystore.xml.epp',
       {
-        binary_provider_type           => $::artifactory::binary_provider_type,
+        binary_provider_type           => $_binary_provider_type,
         binary_provider_cache_maxsize  => $::artifactory::binary_provider_cache_maxsize,
         binary_provider_base_data_dir  => $::artifactory::binary_provider_base_data_dir,
-        binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
+        binary_provider_filesystem_dir => $binary_provider_filesystem_dir,
         binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
       }
     ),

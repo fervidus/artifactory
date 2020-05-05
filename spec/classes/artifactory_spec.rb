@@ -130,7 +130,7 @@ describe 'artifactory' do
                                                                   'set "url" "oracle://some_url"',
                                                                   'set "driver" "oracle.jdbc.OracleDriver"',
                                                                   'set "username" "foouser"',
-                                                                  'set "binary.provider.type" "filesystem"',
+                                                                  'set "binary.provider.type" "file-system"',
                                                                 ],
                                                                 'require' => ['Class[Artifactory::Install]'],
                                                                 'notify'  => 'Class[Artifactory::Service]')
