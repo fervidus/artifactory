@@ -280,30 +280,14 @@ class artifactory::config {
 
   # Automatically setup the database server.
   if ($::artifactory::db_automate) and ($::artifactory::db_type == 'mysql') {
-    include systemd::systemctl::daemon_reload
     include ::artifactory::mysql
 
-    file { 'artif_service':
-      ensure => present,
-      path   => '/lib/systemd/system/artifactory.service',
-      source => 'puppet:///modules/artifactory/artifactory.service',
-      mode   => '0755',
-      notify => Class['artifactory::service'],
-    }
     file_line { 'limits':
       ensure => present,
       path   => '/etc/security/limits.conf',
       line   => "artifactory soft nofile 32000 \n artifactory hard nofile 32000",
       notify => Class['artifactory::service'],
     }
-    file { 'artifManage':
-      ensure => present,
-      path   => '/opt/jfrog/artifactory/bin/artifactoryManage.sh',
-      source => 'puppet:///modules/artifactory/artifactoryManage.sh',
-      mode   => '0775',
-      notify => Class['artifactory::service'],
-    }
-    ~> Class['systemd::systemctl::daemon_reload']
     contain ::mysql::server
   }
 }
