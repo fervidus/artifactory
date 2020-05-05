@@ -17,6 +17,7 @@
 ## Overview
 
 This will install Artifactory OSS or PRO.
+Artifactory 7+ is supported, legacy support for Artifactory 6 is still available.
 
 If you are looking for the HA installation look at:
 
@@ -38,6 +39,15 @@ The Artifactory module manages both the installation and database configuration 
 
 If you want a server installed with the default options you can run
 `include '::artifactory'`.
+
+However, it is strongly recommended to specify the desired version of Artifactory:
+
+```puppet
+class { '::artifactory':
+  package_version => '7.4.3',
+```
+
+This ensures that the module behaves correctly and does not enable obsolete features for your version of Artifactory.
 
 If you need to add database connectivity instantiate with the required parameters:
 

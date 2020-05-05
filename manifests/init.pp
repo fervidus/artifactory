@@ -21,7 +21,7 @@ class artifactory(
   Optional[String] $db_username                                                            = undef,
   Optional[String] $db_password                                                            = undef,
   Optional[Boolean] $db_automate                                                           = false,
-  Optional[Enum['filesystem', 'fullDb', 'cachedFS', 'fullDbDirect']] $binary_provider_type = undef,
+  Optional[Enum['filesystem', 'fullDb', 'cachedFS', 'fullDbDirect', 'file-system', 'full-db', 'cache-fs', 'full-db-direct']] $binary_provider_type = undef,
   Optional[Integer] $pool_max_active                                                       = undef,
   Optional[Integer] $pool_max_idle                                                         = undef,
   Optional[Integer] $binary_provider_cache_maxsize                                         = undef,
