@@ -152,13 +152,6 @@ Sets the package version to. Defaults to 'present'.
 
 This can be changed if you need to install a specific version. It takes the same values allowed for the `ensure` parameter of the standard `package` resource type.
 
-
-##### `manage_java`
-
-Tells the module whether or not to manage the java class. This defaults to true. Usually this is what you want.
-
-If your organization actively manages the java installs across your environment set this to false.
-
 ##### `root_password`
 
 Sets the root password for Puppet managed mysql database
