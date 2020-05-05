@@ -18,10 +18,6 @@ describe 'artifactory' do
 
           it { is_expected.to contain_class('artifactory::yum') }
           it { is_expected.to contain_class('artifactory') }
-          it { is_expected.to contain_package('java-1.6.0-openjdk-devel').with_ensure('absent') }
-          it { is_expected.to contain_package('java-1.6.0-openjdk').with_ensure('absent') }
-          it { is_expected.to contain_package('java-1.7.0-openjdk-devel').with_ensure('absent') }
-          it { is_expected.to contain_package('java-1.7.0-openjdk').with_ensure('absent') }
           it {
             is_expected.to contain_yumrepo('bintray-jfrog-artifactory-rpms').with(
               'baseurl'  => 'https://jfrog.bintray.com/artifactory-rpms',
@@ -147,16 +143,6 @@ describe 'artifactory' do
                                                                    'require' => ['Class[Artifactory::Install]'],
                                                                    'notify'  => 'Class[Artifactory::Service]')
           end
-        end
-
-        context 'artifactory class with manage_java set to false' do
-          let(:params) do
-            {
-              'manage_java' => false,
-            }
-          end
-
-          it { is_expected.to compile.with_all_deps }
         end
 
         context 'mysql automated database' do

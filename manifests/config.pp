@@ -62,7 +62,9 @@ class artifactory::config {
         'cachedFS' => 'cache-fs',
         'fullDbDirect' => 'full-db-direct',
       }
-      # Check if a legacy value was provided that need to be replaced.
+
+      # Check if a legacy value was provided that need to be replaced on
+      # recent versions of Artifactory.
       if ($_legacy == false) and $::artifactory::binary_provider_type and $_types[$::artifactory::binary_provider_type] {
         $_binary_provider_type = $_types[$::artifactory::binary_provider_type]
       } else {
@@ -90,7 +92,7 @@ class artifactory::config {
       }
 
       # Determine the directory for the chosen binary provider.
-      if ($binary_provider_type == 'filesystem') and ! $::artifactory::binary_provider_filesystem_dir {
+      if ($binary_provider_type =~ Enum['filesystem','file-system']) and ! $::artifactory::binary_provider_filesystem_dir {
           $mapped_provider_filesystem_dir = 'filestore'
       } else {
           $mapped_provider_filesystem_dir = $::artifactory::binary_provider_filesystem_dir
@@ -118,7 +120,7 @@ class artifactory::config {
         'url'                            => $::artifactory::db_url,
         'driver'                         => $db_driver,
         'username'                       => $::artifactory::db_username,
-        'binary.provider.type'           => $::artifactory::binary_provider_type,
+        'binary.provider.type'           => $binary_provider_type,
         'pool.max.active'                => $::artifactory::pool_max_active,
         'pool.max.idle'                  => $::artifactory::pool_max_idle,
         'binary.provider.cache.maxsize'  => $::artifactory::binary_provider_cache_maxsize,
@@ -146,7 +148,7 @@ class artifactory::config {
               db_username                    => $::artifactory::db_username,
               db_password                    => $::artifactory::db_password,
               db_type                        => $::artifactory::db_type,
-              binary_provider_type           => $::artifactory::binary_provider_type,
+              binary_provider_type           => $binary_provider_type,
               pool_max_active                => $::artifactory::pool_max_active,
               pool_max_idle                  => $::artifactory::pool_max_idle,
               binary_provider_cache_maxsize  => $::artifactory::binary_provider_cache_maxsize,
