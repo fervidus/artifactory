@@ -1,8 +1,9 @@
-<%- | Enum['derby', 'mariadb', 'mssql', 'mysql', 'oracle', 'postgresql']  $db_type,
+<%- | String                                                              $db_type,
+      String                                                              $db_driver,
       String                                                              $db_url,
       String                                                              $db_username,
       String                                                              $db_password,
-      Enum['filesystem', 'fullDb', 'cachedFS', 'fullDbDirect']            $binary_provider_type           = 'filesystem',
+      String                                                              $binary_provider_type           = 'file-system',
       Optional[Integer]                                                   $pool_max_active                = undef,
       Optional[Integer]                                                   $pool_max_idle                  = undef,
       Optional[Integer]                                                   $binary_provider_cache_maxsize  = undef,
@@ -10,23 +11,7 @@
       Optional[String]                                                    $binary_provider_filesystem_dir = undef,
       Optional[String]                                                    $binary_provider_cache_dir      = undef
 | -%>
-<%-
-$db_driver = $db_type ? {
-    'derby'      => 'org.apache.derby.jdbc.EmbeddedDriver',
-    'mariadb'    => 'org.mariadb.jdbc.Driver',
-    'mssql'      => 'com.microsoft.sqlserver.jdbc.SQLServerDriver',
-    'mysql'      => 'com.mysql.jdbc.Driver',
-    'oracle'     => 'oracle.jdbc.OracleDriver',
-    'postgresql' => 'org.postgresql.Driver',
-    default      => 'not valid',
-}
 
-if $binary_provider_type == 'filesystem' and ! $binary_provider_filesystem_dir {
-  $mapped_provider_filesystem_dir = 'filestore'
-} else {
-  $mapped_provider_filesystem_dir = $binary_provider_filesystem_dir
-}
--%>
 #
 #
 # Artifactory is a binaries repository manager.
@@ -63,11 +48,7 @@ pool.max.active=<%= $pool_max_active %>
 pool.max.idle=<%= $pool_max_idle %>
 <% } -%>
 
-<% if $binary_provider_type != 'fullDbDirect' { -%>
-## Determines where the actual artifacts binaries are stored. Available options:
-## filesystem - binaries are stored in the filesystem (recommended, default)
-## fullDb     - binaries are stored as blobs in the db, filesystem is used for caching
-## cachedFS   - binaries are stored in the filesystem, but a front cache (with faster access) is added
+<% if ($binary_provider_type != 'full-db-direct') { -%>
 ## IMPORTANT NOTE: This property should not be change after the initial setup. To change binaries storage you have to export and import
 binary.provider.type=<%= $binary_provider_type %>
 
@@ -80,7 +61,7 @@ binary.provider.cache.maxSize=<%= $binary_provider_cache_maxsize %>
 <% } -%>
 
 <% if $binary_provider_base_data_dir { -%>
-binary.provider.filesystem.dir=<%= "${binary_provider_base_data_dir}/${mapped_provider_filesystem_dir}" %>
+binary.provider.filesystem.dir=<%= $binary_provider_filesystem_dir %>
 <% } -%>
 
 <% if $binary_provider_cache_dir { -%>
