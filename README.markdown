@@ -16,11 +16,10 @@
 
 ## Overview
 
-This ONLY install Artifactory OSS.
+This will install Artifactory OSS or PRO.
+Artifactory 7+ is supported, legacy support for Artifactory 6 is still available.
 
-If you are looking for the commercial installation look at:
-
-Artifactory PRO: https://forge.puppet.com/fervid/artifactory_pro
+If you are looking for the HA installation look at:
 
 Artifactory HA: https://forge.puppet.com/fervid/artifactory_ha
 
@@ -40,6 +39,15 @@ The Artifactory module manages both the installation and database configuration 
 
 If you want a server installed with the default options you can run
 `include '::artifactory'`.
+
+However, it is strongly recommended to specify the desired version of Artifactory:
+
+```puppet
+class { '::artifactory':
+  package_version => '7.4.3',
+```
+
+This ensures that the module behaves correctly and does not enable obsolete features for your version of Artifactory.
 
 If you need to add database connectivity instantiate with the required parameters:
 
@@ -81,6 +89,18 @@ class { 'artifactory':
   db_password => '45y43y58y435hitr',
   db_url      => 'jdbc:postgresql:127.0.0.1:5432/artifactory',
   require     => Postgresql::Server::Db['artifactory']
+}
+```
+
+### Install commercial version
+
+To install a commercial version of Artifactory:
+
+```puppet
+class { '::artifactory':
+  edition     => 'pro',
+  license_key => 'ABCDEFG1234567890',
+  ...
 }
 ```
 
@@ -131,13 +151,6 @@ This can be changed if Artifactory needs to install a differently named package.
 Sets the package version to. Defaults to 'present'.
 
 This can be changed if you need to install a specific version. It takes the same values allowed for the `ensure` parameter of the standard `package` resource type.
-
-
-##### `manage_java`
-
-Tells the module whether or not to manage the java class. This defaults to true. Usually this is what you want.
-
-If your organization actively manages the java installs across your environment set this to false.
 
 ##### `root_password`
 
@@ -229,8 +242,8 @@ Optional setting for the master key that Artifactory uses to connect to the data
 
 This module has been tested on:
 
-* RedHat Enterprise Linux 5, 6, 7
-* CentOS 5, 6, 7
+* RedHat Enterprise Linux 5, 6, 7, 8
+* CentOS 5, 6, 7, 8
 
 ## Development
 

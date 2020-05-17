@@ -1,16 +1,9 @@
-<%- | Enum['filesystem', 'fullDb','cachedFS', 'fullDbDirect'] $binary_provider_type           = 'filesystem',
+<%- | String                                                  $binary_provider_type           = 'file-system',
       Optional[Integer]                                       $binary_provider_cache_maxsize  = undef,
       Optional[String]                                        $binary_provider_base_data_dir  = undef,
       Optional[String]                                        $binary_provider_filesystem_dir = undef,
       Optional[String]                                        $binary_provider_cache_dir      = undef
 | -%>
-<%- $mapped_provider_type = $binary_provider_type ? {
-  'filesystem'   => 'file-system',
-  'fullDb'       => 'full-db',
-  'cachedFS'     => 'cache-fs',
-  'fullDbDirect' => 'full-db-direct',
-}
--%>
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Artifactory is a binaries repository manager.
@@ -39,12 +32,12 @@
   -->
 
 <config version="1">
-    <chain template="<%= $mapped_provider_type %>"/>
+    <chain template="<%= $binary_provider_type %>"/>
 <% if $binary_provider_type == 'filesystem'
     and ($binary_provider_base_data_dir or $binary_provider_filesystem_dir)
   or $binary_provider_type == 'cachedFS'
     and ($binary_provider_cache_dir or $binary_provider_cache_maxsize) { -%>
-    <provider id="<%= $mapped_provider_type %>" type="<%= $mapped_provider_type %>">
+    <provider id="<%= $binary_provider_type %>" type="<%= $binary_provider_type %>">
 <% if $binary_provider_type == 'filesystem'
   and $binary_provider_base_data_dir { -%>
         <baseDataDir><%= $binary_provider_base_data_dir %></baseDataDir>
