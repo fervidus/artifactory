@@ -33,33 +33,33 @@
 
 <config version="1">
     <chain template="<%= $binary_provider_type %>"/>
-<% if $binary_provider_type == 'filesystem'
+<% if $binary_provider_type == 'file-system'
     and ($binary_provider_base_data_dir or $binary_provider_filesystem_dir)
-  or $binary_provider_type == 'cachedFS'
+  or $binary_provider_type == 'cache-fs'
     and ($binary_provider_cache_dir or $binary_provider_cache_maxsize) { -%>
     <provider id="<%= $binary_provider_type %>" type="<%= $binary_provider_type %>">
-<% if $binary_provider_type == 'filesystem'
+<% if $binary_provider_type == 'file-system'
   and $binary_provider_base_data_dir { -%>
         <baseDataDir><%= $binary_provider_base_data_dir %></baseDataDir>
 <% } -%>
-<% if $binary_provider_type == 'filesystem'
+<% if $binary_provider_type == 'file-system'
   and $binary_provider_filesystem_dir { -%>
         <fileStoreDir><%= $binary_provider_filesystem_dir %></fileStoreDir>
 <% } -%>
-<% if $binary_provider_type == 'cachedFS'
+<% if $binary_provider_type == 'cache-fs'
   and $binary_provider_cache_maxsize { -%>
         <maxCacheSize><%= $binary_provider_cache_maxsize %></maxCacheSize>
 <% } -%>
-<% if $binary_provider_type == 'cachedFS'
+<% if $binary_provider_type == 'cache-fs'
   and $binary_provider_cache_dir { -%>
         <cacheProviderDir><%= $binary_provider_cache_dir %></cacheProviderDir>
 <% } -%>
     </provider>
-<% } elsif $binary_provider_type == 'fullDb' { -%>
+<% } elsif $binary_provider_type == 'full-db' { -%>
     <provider id="cache-fs" type="cache-fs">
       <provider id="blob" type="blob"/>
     </provider>
-<% } elsif $binary_provider_type == 'fullDbDirect' { -%>
+<% } elsif $binary_provider_type == 'full-db-direct' { -%>
     <provider id="blob" type="blob"/>
 <% } -%>
 </config>
