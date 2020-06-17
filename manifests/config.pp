@@ -23,9 +23,13 @@ class artifactory::config {
 
   # Evaluate file and directory locations
   if $_legacy {
+    if $facts['os']['family'] == debian {
+      $_license_dir = "${::artifactory::artifactory_home}/etc/artifactory"
+    }else{
+      $_license_dir = "${::artifactory::artifactory_home}/etc"
+    }
     $_config_dir = "${::artifactory::artifactory_home}/etc"
     $_lib_dir = "${::artifactory::artifactory_home}/tomcat/lib"
-    $_license_dir = "${::artifactory::artifactory_home}/etc"
     $_secrets_dir = "${::artifactory::artifactory_home}/etc/.secrets"
     $_security_dir = "${::artifactory::artifactory_home}/etc/security"
   } else {
