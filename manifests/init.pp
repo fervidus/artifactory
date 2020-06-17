@@ -1,6 +1,25 @@
-# Class: artifactory:  See README.md for documentation.
-# ===========================
+# @summary artifactory:  See README.md for documentation.
 #
+# @param install_apache
+#   Installs an apache server and configures a vhost to proxy to artifactory.
+#
+# @parm servername
+#   Sets the Apache server name via Apache's ServerName directive
+#
+# @param serveradmin
+#   Specifies the email address Apache displays when it renders 1 of its error pages.
+#
+# @param use_ssl
+#   If true, configures apache to use SSL.  Port 80 is rewrittent o 443.
+#
+# @param ssl_cert
+#   The public certificate.
+#
+# @param ssl_key
+#   The private ssl certificate.
+#
+# @param ssl_chain
+#   The SSL certificate authority.
 #
 class artifactory(
   Enum['oss', 'pro', 'enterprise'] $edition                                                = 'oss',
@@ -9,6 +28,9 @@ class artifactory(
   String $yum_name                                                                         = 'bintray-jfrog-artifactory-rpms',
   String $yum_baseurl                                                                      = 'https://jfrog.bintray.com/artifactory-rpms',
   String $yum_baseurl_pro                                                                  = 'https://jfrog.bintray.com/artifactory-pro-rpms',
+  String $debian_name                                                                      = 'bintray-jfrog-artifactory-debs',
+  String $debian_baseurl                                                                   = 'https://jfrog.bintray.com/artifactory-debs',
+  String $debian_baseurl_pro                                                               = 'https://jfrog.bintray.com/artifactory-pro-debs',
   String $package_name                                                                     = 'jfrog-artifactory-oss',
   String $package_name_pro                                                                 = 'jfrog-artifactory-pro',
   String $package_version                                                                  = 'present',
@@ -29,12 +51,47 @@ class artifactory(
   Optional[String] $binary_provider_cache_dir                                              = undef,
   Optional[String] $master_key                                                             = undef,
   Optional[String] $license_key                                                            = undef,
+  Boolean          $install_apache                                                         = false,
+  Optional[String] $servername                                                             = undef,
+  Optional[String] $serveradmin                                                            = undef,
+  Boolean          $use_ssl                                                                = false,
+  Optional[String] $ssl_cert                                                               = undef,
+  Optional[String] $ssl_key                                                                = undef,
+  Optional[String] $ssl_chain                                                              = undef,
 ) {
 
   $service_name = 'artifactory'
 
-  Class{'::artifactory::yum': }
-  -> class{'::artifactory::install': }
-  -> class{'::artifactory::config': }
-  -> class{'::artifactory::service': }
+  # check for OS Type
+  case $facts['os']['family']{
+    'redhat' : {
+      contain artifactory::yum
+      Class['artifactory::yum'] -> Class['artifactory::install']
+
+      # version 7 for RPM based install changes the path for configuration files.
+      $check_legacy = true
+    }
+    'debian' : {
+      include artifactory::apt
+      Class['artifactory::apt'] -> Class['artifactory::install']
+
+      # debian versions retain the same pathing for configuration files for all versions.
+      $check_legacy = false
+    }
+    default  : {
+      fail("Unsupported OS ${facts['os']['family']}.  Please use a debian or redhat based system")
+    }
+  }
+
+  contain artifactory::install
+  contain artifactory::config
+  contain artifactory::service
+
+  if $install_apache {
+    contain artifactory::apache
+    Class['artifactory::service'] -> Class['artifactory::apache']
+  }
+
+  Class['artifactory::install'] -> Class['artifactory::config'] -> Class['artifactory::service']
+
 }

@@ -6,13 +6,18 @@ class artifactory::config {
   # Artifactory 7 introduced several breaking changes.
   # When no version number is specified, we have no choice but to guess.
   # Future versions of this module should enforce setting a version number.
-  if ($artifactory::package_version =~ Enum['present','installed','latest']) {
-    notify {'Specifying a version number in $artifactory::package_version is strongly recommended': loglevel => warning }
-    $_legacy = true
-  } elsif (versioncmp($artifactory::package_version, '7.0') >= 0) {
-    $_legacy = false
-  } else {
-    # Default to legacy. This should ensure that we don't break old versions.
+
+  if $artifactory::check_legacy{
+    if ($artifactory::package_version =~ Enum['present','installed','latest']) {
+      notify {'Specifying a version number in $artifactory::package_version is strongly recommended': loglevel => warning }
+      $_legacy = true
+    } elsif (versioncmp($artifactory::package_version, '7.0') >= 0) {
+      $_legacy = false
+    } else {
+      # Default to legacy. This should ensure that we don't break old versions.
+      $_legacy = true
+    }
+  }else{
     $_legacy = true
   }
 
