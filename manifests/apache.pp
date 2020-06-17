@@ -39,7 +39,7 @@ class artifactory::apache {
     'set Host %{my_custom_host}e',
     'set X-Forwarded-Port %{my_server_port}e',
     'set X-Forwarded-Proto %{my_scheme}e',
-    'set X-JFrog-Override-Base-Url %{my_scheme}e://yourdomain.com:%{my_server_port}e'
+    "set X-JFrog-Override-Base-Url %{my_scheme}e://${artifactory::servername}:%{my_server_port}e"
   ]
 
   class{'apache':
