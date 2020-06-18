@@ -56,6 +56,10 @@ class artifactory::apache {
   contain apache::mod::ssl
   contain apache::mod::proxy
   contain apache::mod::proxy_http
+  contain apache::mod::proxy_balancer
+  contain apache::mod::proxy_connect
+  contain apache::mod::proxy_html
+  apache::mod{'lbmethod_byrequests':}
 
   if $artifactory::use_ssl {
     apache::vhost { 'artifactory-nossl':
