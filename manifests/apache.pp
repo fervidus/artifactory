@@ -3,7 +3,7 @@
 class artifactory::apache {
 
   $servername    = $artifactory::servername
-  $serveraliases = ["*.${servername}"]
+  $serveraliases = ["*.${artifactory::servername}"]
   $serveradmin   = $artifactory::serveradmin
   $rewrites      = [
     {
@@ -21,7 +21,11 @@ class artifactory::apache {
     },
     {
       rewrite_rule => '^(/)?$      /ui/ [R,L]'
+    },
+    {
+      rewrite_rule => '^/ui$      /ui/ [R,L]'
     }
+
   ]
   $proxy_pass = [
     {
