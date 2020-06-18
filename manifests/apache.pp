@@ -7,9 +7,6 @@ class artifactory::apache {
   $serveradmin   = $artifactory::serveradmin
   $rewrites      = [
     {
-      rewrite_cond => '%{REQUEST_URI}" "^/(v1|v2)/',
-    },
-    {
       rewrite_cond => '%{SERVER_PORT} (.*)',
       rewrite_rule => '(.*) - [E=my_server_port:%1]'
     },
