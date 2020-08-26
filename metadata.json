@@ -1,6 +1,6 @@
 {
   "name": "fervid-artifactory",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "author": "Fervid",
   "summary": "Installs and configures Artifactory OSS",
   "license": "Apache-2.0",
