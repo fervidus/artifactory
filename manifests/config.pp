@@ -66,12 +66,13 @@ class artifactory::config {
 
   # Determine the directory for the chosen binary provider.
   if ($binary_provider_type == 'file-system') and ! $::artifactory::binary_provider_filesystem_dir {
-      $mapped_provider_filesystem_dir = 'filestore'
-  } else {
-      $mapped_provider_filesystem_dir = $::artifactory::binary_provider_filesystem_dir
-  }
-  if $::artifactory::binary_provider_base_data_dir {
-    $binary_provider_filesystem_dir = "${::artifactory::binary_provider_base_data_dir}/${mapped_provider_filesystem_dir}"
+    if $::artifactory::binary_provider_base_data_dir {
+      $binary_provider_filesystem_dir = "${::artifactory::binary_provider_base_data_dir}/filestore"
+    } else {
+      $binary_provider_filesystem_dir = undef
+    }
+  } elsif ($binary_provider_type == 'file-system') and $::artifactory::binary_provider_filesystem_dir {
+    $binary_provider_filesystem_dir = $::artifactory::binary_provider_filesystem_dir
   } else {
     $binary_provider_filesystem_dir = undef
   }

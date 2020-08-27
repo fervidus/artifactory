@@ -169,18 +169,76 @@ describe 'artifactory' do
           }
         end
 
-        context 'artifactory class with version specified' do
+        context 'running a legacy version (pre v7)' do
           let(:params) do
             {
-              'package_version' => '5.9.1',
+              'package_version' => '6.0.0',
             }
           end
 
           it { is_expected.to compile.with_all_deps }
           it {
             is_expected.to contain_package('jfrog-artifactory-oss').with(
-              'ensure' => '5.9.1',
+              'ensure' => '6.0.0',
             )
+          }
+          it {
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/binarystore.xml').with_content(%r{chain template="file-system"})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/binarystore.xml').without_content(%r{<provider id="file-system" type="file-system">})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/binarystore.xml').without_content(%r{<fileStoreDir>})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/binarystore.xml').without_content(%r{<baseDataDir>})
+          }
+        end
+
+        context 'running a current version' do
+          let(:params) do
+            {
+              'package_version' => '7.4.3',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it {
+            is_expected.to contain_package('jfrog-artifactory-oss').with(
+              'ensure' => '7.4.3',
+            )
+          }
+          it {
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').with_content(%r{chain template="file-system"})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').without_content(%r{<provider id="file-system" type="file-system">})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').without_content(%r{<fileStoreDir>})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').without_content(%r{<baseDataDir>})
+          }
+        end
+
+        context 'running a current version with a custom binary filesystem dir' do
+          let(:params) do
+            {
+              'package_version' => '7.4.3',
+              'binary_provider_filesystem_dir' => '/opt/artifactory-filestore',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it {
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').with_content(%r{<provider id="file-system" type="file-system">})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').with_content(%r{<fileStoreDir>/opt/artifactory-filestore</fileStoreDir>})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').without_content(%r{<baseDataDir>})
+          }
+        end
+
+        context 'running a current version with a custom binary base data dir' do
+          let(:params) do
+            {
+              'package_version' => '7.4.3',
+              'binary_provider_base_data_dir' => '/opt/artifactory-data',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it {
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').with_content(%r{<baseDataDir>/opt/artifactory-data</baseDataDir>})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').with_content(%r{<fileStoreDir>/opt/artifactory-data/filestore</fileStoreDir>})
           }
         end
       end
