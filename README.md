@@ -11,8 +11,8 @@
     * [Beginning with artifactory](#beginning-with-artifactory)
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+6. [Limitations - OS compatibility, etc.](#limitations)
+7. [Development - Guide for contributing to the module](#development)
 
 ## Overview
 
@@ -21,7 +21,7 @@ Artifactory 7+ is supported, legacy support for Artifactory 6 is still available
 
 If you are looking for the HA installation look at:
 
-Artifactory HA: https://forge.puppet.com/fervid/artifactory_ha
+Artifactory HA: <https://forge.puppet.com/fervid/artifactory_ha>
 
 Github and gitlab are great for storing source control, but bad at storing installers and compiled packages.
 
@@ -51,7 +51,7 @@ This ensures that the module behaves correctly and does not enable obsolete feat
 
 If you need to add database connectivity instantiate with the required parameters:
 
-~~~
+```puppet
 class { '::artifactory':
   jdbc_driver_url                => 'puppet:///modules/my_module/mysql.jar',
   db_type                        => 'oracle',
@@ -65,7 +65,7 @@ class { '::artifactory':
   binary_provider_filesystem_dir => '/var/opt/jfrog/artifactory/data/filestore',
   binary_provider_cache_dir      => '/var/opt/jfrog/artifactory/',
 }
-~~~
+```
 
 ### Artifactory with PostgreSQL database
 
@@ -165,7 +165,7 @@ This is required if using a new data source.
 ##### `use_temp_db_secrets`
 
 Set to true(default) if you want Artifactory to delete temporary db.properties file on service start.
-https://www.jfrog.com/confluence/display/RTF/Configuring+Security#ConfiguringSecurity-HardeningSecurityforSecrets
+<https://www.jfrog.com/confluence/display/RTF/Configuring+Security#ConfiguringSecurity-HardeningSecurityforSecrets>
 
 Set to false if you would like db.properties file to be written to ${::artifactory::artifactory_home}/etc/db.properties
 and managed with Augeas, taking into account Artifactory encrypts password field on startup. Management with Augeas
@@ -196,18 +196,23 @@ Only required for database configuration. The password for the database account.
 Optional setting for the binary storage provider. The type of database to configure for. Valid values are 'filesystem', 'fullDb', 'cachedFS', 'S3'. Defaults to 'filesystem'.
 
 ###### filesystem (default)
+
 This means that metadata is stored in the database, but binaries are stored in the file system. The default location is under $ARTIFACTORY_HOME/data/filestore however this can be modified.
 
 ###### fullDb
+
 All the metadata and the binaries are stored as BLOBs in the database, objects are cached as in cachedFS.
 
 ###### cachedFS
+
 Works the same way as filesystem but also has a binary LRU (Least Recently Used) cache for upload/download requests. Improves performance of instances with high IOPS (I/O Operations) or slow NFS access.
 
 ###### S3
+
 This is the setting used for S3 Object Storage.
 
 ###### fullDbDirect
+
 All the metadata and the binaries are stored as BLOBs in the database. No caching occurs.
 
 ##### `pool_max_active`
@@ -248,7 +253,6 @@ This module has been tested on:
 ## Development
 
 Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
-
 
 ### Contributors
 
