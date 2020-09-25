@@ -81,9 +81,9 @@ class artifactory(
       Class['artifactory::apt'] -> Class['artifactory::install']
 
       # debian versions retain the same pathing for configuration files for all versions.
-      $check_legacy = false
+      #$check_legacy = false
 
-      #$check_legacy = true
+      $check_legacy = true
     }
     default  : {
       fail("Unsupported OS ${facts['os']['family']}.  Please use a debian or redhat based system")
