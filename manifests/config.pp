@@ -132,8 +132,8 @@ class artifactory::config {
       if $::artifactory::use_temp_db_secrets {
         file { $_secrets_dir:
           ensure => directory,
-          owner  => 'artifactory',
-          group  => 'artifactory',
+          owner  => $::artifactory::config_owner,
+          group  => $::artifactory::config_group,
         }
 
         file { "${$_secrets_dir}/.temp.db.properties":
@@ -156,8 +156,8 @@ class artifactory::config {
             }
           ),
           mode    => '0640',
-          owner   => 'artifactory',
-          group   => 'artifactory',
+          owner   => $::artifactory::config_owner,
+          group   => $::artifactory::config_group,
         }
 
         # Setup a symlink for legacy versions.
@@ -180,8 +180,8 @@ class artifactory::config {
           file { "${::artifactory::artifactory_home}/etc/db.properties":
             ensure => file,
             mode   => '0640',
-            owner  => 'artifactory',
-            group  => 'artifactory',
+            owner  => $::artifactory::config_owner,
+            group  => $::artifactory::config_group,
           }
           file { "${::artifactory::artifactory_home}/etc/storage.properties":
             ensure => link,
@@ -238,6 +238,8 @@ class artifactory::config {
   # Configure the filestore.
   file { "${_config_dir}/binarystore.xml":
     ensure  => file,
+    owner   => $::artifactory::config_owner,
+    group   => $::artifactory::config_group,
     content => epp(
       'artifactory/binarystore.xml.epp',
       {
@@ -255,16 +257,16 @@ class artifactory::config {
   if ($::artifactory::master_key) {
     file { $_security_dir:
       ensure => directory,
-      owner  => 'artifactory',
-      group  => 'artifactory',
+      owner  => $::artifactory::config_owner,
+      group  => $::artifactory::config_group,
     }
 
     file { "${_security_dir}/master.key":
       ensure  => file,
       content => $::artifactory::master_key,
       mode    => '0640',
-      owner   => 'artifactory',
-      group   => 'artifactory',
+      owner   => $::artifactory::config_owner,
+      group   => $::artifactory::config_group,
       notify  => Class['artifactory::service'],
     }
   }
