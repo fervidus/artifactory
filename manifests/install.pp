@@ -4,7 +4,7 @@
 #
 class artifactory::install {
   case $artifactory::edition {
-    'pro' : {
+    'enterprise', 'pro' : {
       $_package = $artifactory::package_name_pro
     }
     default : {
