@@ -6,21 +6,30 @@ class artifactory::config {
   # Artifactory 7 introduced several breaking changes.
   # When no version number is specified, we have no choice but to guess.
   # Future versions of this module should enforce setting a version number.
-  if ($artifactory::package_version =~ Enum['present','installed','latest']) {
-    notify {'Specifying a version number in $artifactory::package_version is strongly recommended': loglevel => warning }
-    $_legacy = true
-  } elsif (versioncmp($artifactory::package_version, '7.0') >= 0) {
-    $_legacy = false
-  } else {
-    # Default to legacy. This should ensure that we don't break old versions.
+
+  if $artifactory::check_legacy{
+    if ($artifactory::package_version =~ Enum['present','installed','latest']) {
+      notify {'Specifying a version number in $artifactory::package_version is strongly recommended': loglevel => warning }
+      $_legacy = true
+    } elsif (versioncmp($artifactory::package_version, '7.0') >= 0) {
+      $_legacy = false
+    } else {
+      # Default to legacy. This should ensure that we don't break old versions.
+      $_legacy = true
+    }
+  }else{
     $_legacy = true
   }
 
   # Evaluate file and directory locations
   if $_legacy {
+    if $facts['os']['family'] == debian {
+      $_license_dir = "${::artifactory::artifactory_home}/etc/artifactory"
+    }else{
+      $_license_dir = "${::artifactory::artifactory_home}/etc"
+    }
     $_config_dir = "${::artifactory::artifactory_home}/etc"
     $_lib_dir = "${::artifactory::artifactory_home}/tomcat/lib"
-    $_license_dir = "${::artifactory::artifactory_home}/etc"
     $_secrets_dir = "${::artifactory::artifactory_home}/etc/.secrets"
     $_security_dir = "${::artifactory::artifactory_home}/etc/security"
   } else {
