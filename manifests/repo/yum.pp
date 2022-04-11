@@ -1,8 +1,6 @@
-# == Class artifactory::install
+# == Class artifactory::repo::yum
 #
-# This class is called from artifactory for install.
-#
-class artifactory::yum {
+class artifactory::repo::yum {
   if $::artifactory::manage_repo {
     case $artifactory::edition {
       'enterprise', 'pro' : {
