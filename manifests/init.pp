@@ -9,6 +9,9 @@ class artifactory(
   String $yum_name                                                                         = 'bintray-jfrog-artifactory-rpms',
   String $yum_baseurl                                                                      = 'https://jfrog.bintray.com/artifactory-rpms',
   String $yum_baseurl_pro                                                                  = 'https://jfrog.bintray.com/artifactory-pro-rpms',
+  String $deb_baseurl                                                                      = 'https://releases.jfrog.io/artifactory/artifactory-debs',
+  String $deb_baseurl_pro                                                                  = 'https://releases.jfrog.io/artifactory/artifactory-pro-debs',
+  String $deb_baseurl_key                                                                  = 'https://releases.jfrog.io/artifactory/api/gpg/key/public',
   String $package_name                                                                     = 'jfrog-artifactory-oss',
   String $package_name_pro                                                                 = 'jfrog-artifactory-pro',
   String $package_version                                                                  = 'present',
@@ -35,7 +38,7 @@ class artifactory(
 
   $service_name = 'artifactory'
 
-  Class{'::artifactory::yum': }
+  Class{'::artifactory::repo': }
   -> class{'::artifactory::install': }
   -> class{'::artifactory::config': }
   -> class{'::artifactory::service': }

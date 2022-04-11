@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe 'artifactory' do
   context 'supported operating systems' do
-    on_supported_os.each do |os, facts|
+    on_supported_os.each do |os, os_facts|
       context "on #{os}" do
-        let(:facts) { facts.merge('root_home' => '/root') }
+        let(:facts) { os_facts.merge('root_home' => '/root') }
 
         context 'artifactory class without any parameters' do
           it { is_expected.to compile.with_all_deps }
@@ -16,17 +16,29 @@ describe 'artifactory' do
           it { is_expected.to contain_service('artifactory') }
           it { is_expected.to contain_package('jfrog-artifactory-oss').with_ensure('present') }
 
-          it { is_expected.to contain_class('artifactory::yum') }
           it { is_expected.to contain_class('artifactory') }
-          it {
-            is_expected.to contain_yumrepo('bintray-jfrog-artifactory-rpms').with(
-              'baseurl'  => 'https://jfrog.bintray.com/artifactory-rpms',
-              'descr'    => 'bintray-jfrog-artifactory-rpms',
-              'gpgcheck' => '1',
-              'enabled'  => '1',
-              'gpgkey'   => 'https://jfrog.bintray.com/artifactory-rpms/repodata/repomd.xml.key',
-            )
-          }
+          case os_facts[:os]['family']
+          when 'Debian'
+            it { is_expected.to contain_class('artifactory::repo::debian') }
+            it {
+              is_expected.to contain_apt__source('artifactory').with(
+                               'location' => 'https://releases.jfrog.io/artifactory/artifactory-debs',
+                               'release'  => os_facts[:os]['distro']['codename'],
+                               'repos'    => 'main'
+                             )
+            }
+          else
+            it { is_expected.to contain_class('artifactory::repo::yum') }
+            it {
+              is_expected.to contain_yumrepo('bintray-jfrog-artifactory-rpms').with(
+                               'baseurl'  => 'https://jfrog.bintray.com/artifactory-rpms',
+                               'descr'    => 'bintray-jfrog-artifactory-rpms',
+                               'gpgcheck' => '1',
+                               'enabled'  => '1',
+                               'gpgkey'   => 'https://jfrog.bintray.com/artifactory-rpms/repodata/repomd.xml.key',
+                             )
+            }
+          end
         end
 
         context 'artifactory class with master_key parameter' do
