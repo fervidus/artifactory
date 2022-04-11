@@ -241,6 +241,29 @@ describe 'artifactory' do
             is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').with_content(%r{<fileStoreDir>/opt/artifactory-data/filestore</fileStoreDir>})
           }
         end
+
+        context 'running a current version with s3 storage provider' do
+          let(:params) do
+            {
+              'package_version' => '7.4.3',
+              'binary_provider_type' => 's3',
+              'binary_provider_config_hash' => {
+                'endpoint' => 's3.amazonaws.com',
+                'useInstanceCredentials' => true,
+                'bucketName' => 'art-bucket',
+                'region' => 'eu-central-1',
+              }
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it {
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').with_content(%r{<provider id="s3-storage-v3" type="s3-storage-v3">})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').with_content(%r{<bucketName>art-bucket</bucketName>})
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/artifactory/binarystore.xml').with_content(%r{<useInstanceCredentials>true</useInstanceCredentials>})
+          }
+        end
+
       end
     end
   end

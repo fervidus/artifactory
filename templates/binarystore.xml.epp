@@ -2,7 +2,8 @@
       Optional[Integer]                                       $binary_provider_cache_maxsize  = undef,
       Optional[String]                                        $binary_provider_base_data_dir  = undef,
       Optional[String]                                        $binary_provider_filesystem_dir = undef,
-      Optional[String]                                        $binary_provider_cache_dir      = undef
+      Optional[String]                                        $binary_provider_cache_dir      = undef,
+      Optional[Hash]                                          $binary_provider_config_hash    = undef
 | -%>
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
@@ -61,5 +62,11 @@
     </provider>
 <% } elsif $binary_provider_type == 'full-db-direct' { -%>
     <provider id="blob" type="blob"/>
+<% } elsif $binary_provider_type == 's3-storage-v3' { -%>
+    <provider id="s3-storage-v3" type="s3-storage-v3">
+<%   $binary_provider_config_hash.each |$key, $value| { -%>
+       <<%= $key %>><%= $value %></<%= $key %>>
+<%   } -%>
+    </provider>
 <% } -%>
 </config>

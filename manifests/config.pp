@@ -38,6 +38,7 @@ class artifactory::config {
     'fullDb' => 'full-db',
     'cachedFS' => 'cache-fs',
     'fullDbDirect' => 'full-db-direct',
+    's3' => 's3-storage-v3'
   }
 
   # Check if a value was provided that need to be replaced.
@@ -53,7 +54,8 @@ class artifactory::config {
   case $_types[$::artifactory::binary_provider_type] {
     'file-system',
     'full-db',
-    'cache-fs': {
+    'cache-fs',
+    's3': {
       $binary_provider_type = $_binary_provider_type
     }
     'full-db-direct': {
@@ -248,6 +250,7 @@ class artifactory::config {
         binary_provider_base_data_dir  => $::artifactory::binary_provider_base_data_dir,
         binary_provider_filesystem_dir => $binary_provider_filesystem_dir,
         binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
+        binary_provider_config_hash    => $::artifactory::binary_provider_config_hash,
       }
     ),
     notify  => Class['artifactory::service'],
