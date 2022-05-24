@@ -1,5 +1,11 @@
 # Changelog
 
+2022-05-24 Release 3.0.6
+
+* Added a new System System Property
+* Added Ubuntu Support.
+* Updated to latest PDK Version.
+
 2020-08-26 Release 3.0.1
 
 * Fix for PR 11
@@ -7,7 +13,6 @@
 2020-16-05 Release 3.0.0
 
 * Thanks to fraenki
-
 * Add support for Artifactory 7
 
 2020-06-04 Release 2.2.8
