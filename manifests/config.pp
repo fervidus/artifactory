@@ -299,4 +299,14 @@ class artifactory::config {
     }
     contain ::mysql::server
   }
+
+  if $::artifactory::artifactory_system_properties {
+    $::artifactory::artifactory_system_properties.each | String $property | {
+      file_line { $property:
+        path   => "${_config_dir}/artifactory.system.properties",
+        line   => $property,
+        notify => Class['artifactory::service'],
+      }
+    }
+  }
 }
