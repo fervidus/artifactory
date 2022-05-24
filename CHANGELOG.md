@@ -5,6 +5,7 @@
 * Added a new System System Property
 * Added Ubuntu Support.
 * Updated to latest PDK Version.
+* Added Puppet 6 support.
 
 2020-08-26 Release 3.0.1
 

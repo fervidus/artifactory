@@ -1,12 +1,12 @@
 {
-  "name": "fervid-artifactory",
-  "version": "3.0.5",
+  "name": "landcareresearch-artifactory",
+  "version": "3.0.6",
   "author": "Fervid",
   "summary": "Installs and configures Artifactory OSS",
   "license": "Apache-2.0",
-  "source": "https://github.com/fervidus/artifactory.git",
-  "project_page": "https://github.com/fervidus/artifactory",
-  "issues_url": "https://github.com/fervidus/artifactory/issues",
+  "source": "https://github.com/manaakiwhenua/artifactory.git",
+  "project_page": "https://github.com/manaakiwhenua/artifactory",
+  "issues_url": "https://github.com/manaakiwhenua/artifactory/issues",
   "dependencies": [
     {
       "name": "puppetlabs-yumrepo_core",
@@ -37,12 +37,19 @@
         "7",
         "8"
       ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "18.04",
+        "20.04"
+      ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.4.0 < 6.0.0"
+      "version_requirement": ">= 4.4.0 < 7.0.0"
     }
   ],
   "pdk-version": "2.4.0",
