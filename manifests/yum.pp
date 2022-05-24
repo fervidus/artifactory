@@ -5,7 +5,7 @@
 class artifactory::yum {
   if $::artifactory::manage_repo {
     case $artifactory::edition {
-      'pro' : {
+      'enterprise', 'pro' : {
         $_url = $artifactory::yum_baseurl_pro
       }
       default : {

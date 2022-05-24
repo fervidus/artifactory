@@ -243,6 +243,14 @@ Optional setting for the location of the cache. This should be set to your $ARTI
 
 Optional setting for the master key that Artifactory uses to connect to the database. If specified, it ensures that if your node terminates, a new one can be spun up that can connect to the same database as before. Otherwise, Artifactory will generate a new master key on first run.
 
+##### `config_owner`
+
+Optional argument to set the ownership of the configuration files.
+
+##### `config_group`
+
+Optional argument to set the group of the configuration files.
+
 ## Limitations
 
 This module has been tested on:

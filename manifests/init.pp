@@ -38,6 +38,8 @@ class artifactory(
   String                  $package_name_pro               = 'jfrog-artifactory-pro',
   String                  $package_version                = 'present',
   String                  $artifactory_home               = '/var/opt/jfrog/artifactory',
+  Optional[String]        $config_owner                   = 'artifactory',
+  Optional[String]        $config_group                   = 'artifactory',
   Optional[String]        $root_password                  = 'password',
   Optional[String]        $jdbc_driver_url                = undef,
   Optional[Enum[
