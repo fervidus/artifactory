@@ -16,7 +16,7 @@ class artifactory::apt {
     apt::source { $artifactory::debian_name:
       location => $_url,
       key      => 'A3D085F542F740BBD7E3A2846B219DCCD7639232',
-      release  => $facts['os']['release']['full'],
+      release  => $facts['os']['distro']['codename'],
       repos    => 'main',
     }
   }
