@@ -1,7 +1,6 @@
 # @summary Sets up an apache proxy.
 #
 class artifactory::apache {
-
   $servername    = $artifactory::servername
   $serveraliases = ["*.${artifactory::servername}"]
   $serveradmin   = $artifactory::serveradmin
@@ -24,29 +23,28 @@ class artifactory::apache {
     },
     {
       rewrite_rule => '^/ui$      /ui/ [R,L]'
-    }
-
+    },
   ]
   $proxy_pass = [
     {
       path            => '/artifactory/',
       url             => 'http://localhost:8081/artifactory/',
-      reverse_cookies => [{path => '/', url => '/'}]
+      reverse_cookies => [{ path => '/', url => '/' }]
     },
     {
       path            => '/',
       url             => 'http://localhost:8082/',
-      reverse_cookies => [{path => '/', url => '/'}]
+      reverse_cookies => [{ path => '/', url => '/' }]
     }
   ]
   $request_headers = [
     'set Host %{my_custom_host}e',
     'set X-Forwarded-Port %{my_server_port}e',
     'set X-Forwarded-Proto %{my_scheme}e',
-    "set X-JFrog-Override-Base-Url %{my_scheme}e://${artifactory::servername}:%{my_server_port}e"
+    "set X-JFrog-Override-Base-Url %{my_scheme}e://${artifactory::servername}:%{my_server_port}e",
   ]
 
-  class{'apache':
+  class { 'apache':
     default_vhost => false,
     servername    => $servername,
     mpm_module    => 'event',
@@ -59,7 +57,7 @@ class artifactory::apache {
   contain apache::mod::proxy_balancer
   contain apache::mod::proxy_connect
   contain apache::mod::proxy_html
-  apache::mod{'lbmethod_byrequests':}
+  apache::mod { 'lbmethod_byrequests': }
 
   if $artifactory::use_ssl {
     apache::vhost { 'artifactory-nossl':
@@ -74,7 +72,7 @@ class artifactory::apache {
         },
       ],
     }
-    apache::vhost{'artifactory-ssl':
+    apache::vhost { 'artifactory-ssl':
       servername            => $servername,
       serveraliases         => $serveraliases,
       serveradmin           => $serveradmin,
@@ -92,8 +90,8 @@ class artifactory::apache {
       ssl_chain             => $artifactory::ssl_chain,
       ssl_proxyengine       => true,
     }
-  }else{
-    apache::vhost{'artifactory':
+  } else {
+    apache::vhost { 'artifactory':
       servername            => $servername,
       serveraliases         => $serveraliases,
       serveradmin           => $serveradmin,
