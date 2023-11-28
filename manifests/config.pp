@@ -18,18 +18,18 @@ class artifactory::config {
 
   # Evaluate file and directory locations
   if $_legacy {
-    $_config_dir = "${::artifactory::artifactory_home}/etc"
-    $_lib_dir = "${::artifactory::artifactory_home}/tomcat/lib"
-    $_license_dir = "${::artifactory::artifactory_home}/etc"
-    $_secrets_dir = "${::artifactory::artifactory_home}/etc/.secrets"
-    $_security_dir = "${::artifactory::artifactory_home}/etc/security"
+    $_config_dir = "${artifactory::data_directory}/etc"
+    $_lib_dir = "${artifactory::data_directory}/tomcat/lib"
+    $_license_dir = "${artifactory::data_directory}/etc"
+    $_secrets_dir = "${artifactory::data_directory}/etc/.secrets"
+    $_security_dir = "${artifactory::data_directory}/etc/security"
   } else {
     # Artifactory 7+
-    $_config_dir = "${::artifactory::artifactory_home}/etc/artifactory"
-    $_lib_dir = "${::artifactory::artifactory_home}/bootstrap/artifactory/tomcat/lib"
-    $_license_dir = "${::artifactory::artifactory_home}/etc/artifactory"
-    $_secrets_dir = "${::artifactory::artifactory_home}/etc/artifactory/.secrets"
-    $_security_dir = "${::artifactory::artifactory_home}/etc/artifactory/security"
+    $_config_dir = "${artifactory::data_directory}/etc/artifactory"
+    $_lib_dir = "${artifactory::data_directory}/bootstrap/artifactory/tomcat/lib"
+    $_license_dir = "${artifactory::data_directory}/etc/artifactory"
+    $_secrets_dir = "${artifactory::data_directory}/etc/artifactory/.secrets"
+    $_security_dir = "${artifactory::data_directory}/etc/artifactory/security"
   }
 
   # Map binary provider types to their actual configuration options.
@@ -162,7 +162,7 @@ class artifactory::config {
 
         # Setup a symlink for legacy versions.
         if $_legacy {
-          file { "${::artifactory::artifactory_home}/etc/storage.properties":
+          file { "${artifactory::data_directory}/etc/storage.properties":
             ensure => link,
             target => "${_secrets_dir}/.temp.db.properties",
           }
@@ -177,15 +177,15 @@ class artifactory::config {
           # TODO: Manage system.yaml, especially the DB configuration.
         } else {
           # Make sure we have correct mode and ownership
-          file { "${::artifactory::artifactory_home}/etc/db.properties":
+          file { "${artifactory::data_directory}/etc/db.properties":
             ensure => file,
             mode   => '0640',
             owner  => $::artifactory::config_owner,
             group  => $::artifactory::config_group,
           }
-          file { "${::artifactory::artifactory_home}/etc/storage.properties":
+          file { "${artifactory::data_directory}/etc/storage.properties":
             ensure => link,
-            target => "${::artifactory::artifactory_home}/etc/db.properties",
+            target => "${artifactory::data_directory}/etc/db.properties",
           }
 
           # Prepare DB hash for use with Augeas.
@@ -197,8 +197,8 @@ class artifactory::config {
 
           # Setup database configuration in db.properties.
           augeas { 'db.properties':
-            context => "/files${::artifactory::artifactory_home}/etc/db.properties",
-            incl    => "${::artifactory::artifactory_home}/etc/db.properties",
+            context => "/files${artifactory::data_directory}/etc/db.properties",
+            incl    => "${artifactory::data_directory}/etc/db.properties",
             lens    => 'Properties.lns',
             changes => $dbpropchanges,
             require => [Class['::artifactory::install']],
@@ -212,11 +212,11 @@ class artifactory::config {
           # To update password from hiera, remove the password field in db.properties,
           # to update locally, just update and Artifactory will encrypt.
           augeas { 'db.properties.pw':
-            context => "/files${::artifactory::artifactory_home}/etc/db.properties",
-            incl    => "${::artifactory::artifactory_home}/etc/db.properties",
+            context => "/files${artifactory::data_directory}/etc/db.properties",
+            incl    => "${artifactory::data_directory}/etc/db.properties",
             lens    => 'Properties.lns',
             changes => [ "set \"password\" \"${::artifactory::db_password}\"" ],
-            onlyif  => "match /files${::artifactory::artifactory_home}/etc/db.properties/password size == 0",
+            onlyif  => "match /files${artifactory::data_directory}/etc/db.properties/password size == 0",
             require => [Class['::artifactory::install']],
             notify  => Class['::artifactory::service'],
           }
@@ -227,7 +227,7 @@ class artifactory::config {
       # We are making an assumption that not passing db_username and db_password we are changing to derby
       # and do not need db.properties file, but least be explicit in cleaning up.
       if ($_legacy == true) and ($::artifactory::db_type == 'derby') {
-        file { "${::artifactory::artifactory_home}/etc/db.properties":
+        file { "${artifactory::data_directory}/etc/db.properties":
           ensure  => absent,
         }
       }

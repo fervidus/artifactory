@@ -3,7 +3,7 @@
 # This class is called from artifactory for install.
 #
 class artifactory::yum {
-  if $::artifactory::manage_repo {
+  if $::artifactory::manage_repo and $artifactory::install_method == 'package' {
     case $artifactory::edition {
       'enterprise', 'pro' : {
         $_url = $artifactory::yum_baseurl_pro

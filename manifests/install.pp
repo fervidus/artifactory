@@ -3,16 +3,14 @@
 # This class is called from artifactory for install.
 #
 class artifactory::install {
-  case $artifactory::edition {
-    'enterprise', 'pro' : {
-      $_package = $artifactory::package_name_pro
+  case $artifactory::install_method {
+    'package': {
+      contain artifactory::install::package
+      Class['artifactory::install::package']
     }
-    default : {
-      $_package = $artifactory::package_name
+    'archive': {
+      contain artifactory::install::archive
+      Class['artifactory::install::archive']
     }
-  }
-
-  package { $_package:
-    ensure  => $::artifactory::package_version,
   }
 }
